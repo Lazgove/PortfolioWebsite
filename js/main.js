@@ -64,14 +64,17 @@ PROJECTS.forEach((p, i) => {
   const tile = document.createElement('div');
   tile.className = 'project-tile';
   tile.dataset.index = i;
+
+  const isVideo = p.hero && p.hero.endsWith('.mp4');
+  const mediaHtml = isVideo
+    ? `<video class="tile-video" src="media/${p.hero}" autoplay loop muted playsinline></video>`
+    : `<div class="ph"></div>`;
+
   tile.innerHTML = `
-    <div class="ph"></div>
-    <span class="ph-label">// ${p.hero}</span>
-    <span class="tile-index">${String(i + 1).padStart(2, '0')}</span>
+    ${mediaHtml}
     <span class="tile-view" data-i18n="tile.view">${t('tile.view')}</span>
     <div class="tile-info">
       <div class="tile-title">${p.title}</div>
-      <div class="tile-meta">${p.tools} — ${p.year}</div>
     </div>
   `;
   tile.addEventListener('click', () => openCaseStudy(i));
@@ -159,7 +162,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ============ NAV ACTIVE STATE ON SCROLL ============ */
-const sections = ['work', 'about', 'contact'].map(id => document.getElementById(id));
+const sections = ['work', 'contact'].map(id => document.getElementById(id));
 const navLinks = document.querySelectorAll('nav a');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
