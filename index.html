@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guillaume Abramovici — Motion Design</title>
+<meta name="description" content="Guillaume Abramovici — 2D/3D Motion Designer & Creative Technologist working across broadcast, real-time, and 3D.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Mono:wght@400;500&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">GUI<span style="color:var(--accent)">.</span></div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span></button>
+  <nav>
+    <ul>
+      <li><a href="#work" class="active" data-i18n="nav.work">Work</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="header-actions">
+    <a href="media/Guillaume_Abramovici_CV.pdf" download class="header-btn" aria-label="Download CV">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span data-i18n="cv.label">CV</span>
+    </a>
+    <button class="header-btn" id="themeToggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="header-btn" id="langToggle" aria-label="Switch language">FR</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-reel">
+    <div class="placeholder">
+      <div class="scan"></div>
+      <span>// reel_loop.mp4</span>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Motion Designer — Open to work</div>
+    <h1 class="hero-title">
+      <span class="line"><span>Motion</span></span>
+      <span class="line"><span>Design+</span></span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">Guillaume — building broadcast graphics, 3D product animation, and real-time interactive experiences. 5+ years freelance, currently exploring UE5 for live, data-driven motion.</p>
+    <div class="hero-meta">
+      <div><b data-i18n="hero.tools">Tools</b><span data-i18n="hero.tools.val">After Effects, Blender, UE5</span></div>
+      <div><b data-i18n="hero.focus">Focus</b><span data-i18n="hero.focus.val">Broadcast · Betting · Real-time</span></div>
+      <div><b data-i18n="hero.based">Based</b><span data-i18n="hero.based.val">Paris, France</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="bar"></div><span data-i18n="scroll">SCROLL</span></div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="work-section" id="work">
+  <div class="section-label"><b data-i18n="work.label">Selected Work</b> 2024 — 2026</div>
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="project-grid" id="project-grid"></div>
+</section>
+
+<!-- ============ CLIENTS ============ -->
+<section class="clients">
+  <div class="section-label"><b data-i18n="clients.label">Clients</b></div>
+  <div class="logo-strip">
+    <img src="media/logo-expert-impots.png" alt="Expert impôts">
+    <img src="media/logo-kanopee.png" alt="Kanopée associés">
+    <img src="media/logo-holovisio.png" alt="Holovisio">
+    <img src="media/logo-yeman.png" alt="Yeman">
+    <img src="media/logo-recognity.png" alt="Recognity">
+    <img src="media/logo-storyfox.png" alt="Storyfox">
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="panel" id="about">
+  <div class="section-label" style="padding:0 0 8px 0;"><b data-i18n="about.label">About</b> 00</div>
+  <h2 data-i18n-html="about.h2">Motion that has to <span class="accent">read instantly</span> — and still feel considered.</h2>
+  <p data-i18n="about.p">I'm a 2D/3D motion designer and creative technologist based in Paris, with over 5 years creating animated content for brands, products, and digital platforms — explainer videos, marketing animations, event teasers, and social content. An engineering background in image processing means I work equally comfortably on the technical side: dynamic After Effects pipelines, real-time UE5 builds, and motion integrated directly into UI/UX. I like the constraint of work that has to land in three seconds, and the craft of making it still feel deliberate.</p>
+  <div class="skills-row">
+    <span class="skill-tag">After Effects</span>
+    <span class="skill-tag">Blender</span>
+    <span class="skill-tag">Cinema 4D</span>
+    <span class="skill-tag">Unreal Engine 5</span>
+    <span class="skill-tag">Houdini</span>
+    <span class="skill-tag">Python / Three.js</span>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="panel" id="contact">
+  <div class="section-label" style="padding:0 0 8px 0;"><b data-i18n="contact.label">Contact</b> 01</div>
+  <h2 data-i18n="contact.h2">Got a project in mind?</h2>
+  <a href="mailto:guillaume.abramovici@outlook.fr" class="contact-cta">
+    guillaume.abramovici@outlook.fr
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+  </a>
+  <p data-i18n="contact.p">Currently available for freelance and full-time motion design roles, with particular interest in real-time / UE5 work. Also reachable at +33 6 37 30 03 18.</p>
+  <a href="media/Guillaume_Abramovici_CV.pdf" download class="cv-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    <span data-i18n="cv.download">Download CV</span>
+  </a>
+</section>
+
+<footer>
+  <div class="col"><b data-i18n="footer.hours">Hours</b><span data-i18n="footer.hours.val">Mon — Fri</span><br>10:00 — 18:00</div>
+  <div class="col"><b data-i18n="footer.follow">Follow</b><a href="https://www.instagram.com/lazlanove/" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.malt.fr/profile/guillaumeabramovici" target="_blank" rel="noopener">Malt</a><br><a href="https://www.linkedin.com/in/guillaumeabramovici/" target="_blank" rel="noopener">LinkedIn</a><br><a href="https://vimeo.com/787304740" target="_blank" rel="noopener">Showreel</a></div>
+  <div class="col"><b>Guillaume Abramovici</b><span data-i18n="footer.role">Motion Design</span><br><a href="mailto:guillaume.abramovici@outlook.fr">guillaume.abramovici@outlook.fr</a></div>
+</footer>
+
+<!-- ============ CASE STUDY OVERLAY ============ -->
+<div class="case-study" id="caseStudy">
+  <div class="cs-close" id="csClose">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <span data-i18n="cs.close">CLOSE</span>
+  </div>
+  <div class="cs-hero"><div class="ph"><span id="csHeroLabel">// hero_still.jpg</span></div></div>
+  <div class="cs-body">
+    <h2 class="cs-title" id="csTitle">Project Title</h2>
+    <p class="cs-desc" id="csDesc">Description goes here.</p>
+    <div class="cs-credits" id="csCredits"></div>
+    <div id="csMedia"></div>
+    <div class="cs-next">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:0.08em;text-transform:uppercase;" data-i18n="cs.next.label">Next project</span>
+      <a href="#" id="csNext">Next Project Name</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
