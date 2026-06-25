@@ -66,8 +66,9 @@ PROJECTS.forEach((p, i) => {
   tile.dataset.index = i;
 
   const isVideo = p.hero && p.hero.endsWith('.mp4');
+  const posStyle = p.heroPosition ? ` style="object-position:${p.heroPosition}"` : '';
   const mediaHtml = isVideo
-    ? `<video class="tile-video" src="media/${p.hero}" autoplay loop muted playsinline></video>`
+    ? `<video class="tile-video" src="media/${p.hero}" autoplay loop muted playsinline${posStyle}${p.heroStart ? ` data-start="${p.heroStart}"` : ''}></video>`
     : `<div class="ph"></div>`;
 
   tile.innerHTML = `
@@ -77,6 +78,10 @@ PROJECTS.forEach((p, i) => {
       <div class="tile-title">${p.title}</div>
     </div>
   `;
+  const vid = tile.querySelector('video[data-start]');
+  if (vid) {
+    vid.addEventListener('loadedmetadata', () => { vid.currentTime = parseFloat(vid.dataset.start); });
+  }
   tile.addEventListener('click', () => openCaseStudy(i));
   gridEl.appendChild(tile);
 });
@@ -127,7 +132,13 @@ function openCaseStudy(idx) {
   const p = PROJECTS[idx];
   const desc = currentLang === 'fr' && p.desc_fr ? p.desc_fr : p.desc;
 
-  document.getElementById('csHeroLabel').textContent = '// ' + p.hero;
+  const heroEl = document.querySelector('.cs-hero');
+  if (p.hero && p.hero.endsWith('.mp4')) {
+    heroEl.innerHTML = `<video src="media/${p.hero}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>`;
+  } else {
+    heroEl.innerHTML = `<div class="ph"><span id="csHeroLabel">// ${p.hero}</span></div>`;
+  }
+
   document.getElementById('csTitle').textContent = p.title;
   document.getElementById('csDesc').textContent = desc;
 
@@ -139,9 +150,12 @@ function openCaseStudy(idx) {
   `;
 
   const mediaEl = document.getElementById('csMedia');
-  mediaEl.innerHTML = p.stills.map(s => `
-    <div class="cs-still"><div class="ph"><span>// ${s}</span></div></div>
-  `).join('');
+  mediaEl.innerHTML = p.stills.map(s => {
+    if (s.endsWith('.mp4')) {
+      return `<div class="cs-still"><video src="media/${s}" controls muted playsinline></video></div>`;
+    }
+    return `<div class="cs-still"><div class="ph"><span>// ${s}</span></div></div>`;
+  }).join('');
 
   const nextIdx = (idx + 1) % PROJECTS.length;
   const nextLink = document.getElementById('csNext');
@@ -153,6 +167,7 @@ function openCaseStudy(idx) {
 }
 
 function closeCaseStudy() {
+  caseStudy.querySelectorAll('video').forEach(v => { v.pause(); v.src = ''; });
   caseStudy.classList.remove('open');
   document.body.style.overflow = '';
 }

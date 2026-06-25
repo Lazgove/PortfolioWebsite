@@ -1,5 +1,18 @@
 const PROJECTS = [
   {
+    title: "AC Consulting",
+    tags: ["Explainer"],
+    tools: "After Effects",
+    year: "2025",
+    role: "Motion Design",
+    client: "AC Consulting",
+    application: "Corporate",
+    desc: "Motion design for AC Consulting.",
+    desc_fr: "Motion design pour AC Consulting.",
+    hero: "AC_Consulting/Animation.mp4",
+    stills: []
+  },
+  {
     title: "Expert impôts — Social media videos",
     tags: ["Social", "3D"],
     tools: "Blender / AE",
@@ -9,21 +22,21 @@ const PROJECTS = [
     application: "Social / 9:16",
     desc: "Social media video content — 3D animations and compositing designed for vertical social placement.",
     desc_fr: "Contenus vidéo pour les réseaux sociaux — animations 3D et compositing conçus pour un format social vertical.",
-    hero: "vega_drop_hero.mp4",
-    stills: ["scene_01_still.png", "scene_02_still.png"]
+    hero: "expert_impots/expert_impots.mp4",
+    stills: ["expert_impots/Format_4_5.mp4"]
   },
   {
-    title: "Kanopée associés — Explainer videos and edits",
-    tags: ["Explainer", "Edit"],
-    tools: "After Effects",
-    year: "2026",
-    role: "Motion Design, Edit",
-    client: "Kanopée associés",
-    application: "Broadcast / Explainer",
-    desc: "Explainer videos and editorial edits — clear, fast-paced motion graphics designed to communicate key messages effectively.",
-    desc_fr: "Vidéos explicatives et montages éditoriaux — motion graphics clairs et dynamiques conçus pour communiquer efficacement les messages clés.",
-    hero: "boredraw_hero.mp4",
-    stills: ["boredraw_ui_01.png", "boredraw_ui_02.png"]
+    title: "Fortel",
+    tags: ["3D"],
+    tools: "Blender",
+    year: "2025",
+    role: "3D Animation",
+    client: "Fortel",
+    application: "Product",
+    desc: "3D product animation for Fortel.",
+    desc_fr: "Animation 3D produit pour Fortel.",
+    hero: "Fortel.mp4",
+    stills: []
   },
   {
     title: "Holovisio — Characters creation and animations",
@@ -35,8 +48,10 @@ const PROJECTS = [
     application: "Product / UI Motion",
     desc: "Character creation and animation — designing and animating original characters for product and brand storytelling.",
     desc_fr: "Création et animation de personnages — conception et animation de personnages originaux pour le storytelling produit et marque.",
-    hero: "cashout_hero.mp4",
-    stills: ["cashout_states.png"]
+    hero: "Holovisio/Characters/To_send_Animation_finale_black.mp4",
+    heroStart: 2,
+    heroPosition: "top",
+    stills: ["Holovisio/Characters/Render_JPS_1.mp4", "Holovisio/Characters/Simone.mp4"]
   },
   {
     title: "Holovisio — STEP files animations",
@@ -48,21 +63,34 @@ const PROJECTS = [
     application: "Product / Technical",
     desc: "Technical STEP file animations — bringing CAD models to life with dynamic 3D animation for product visualization.",
     desc_fr: "Animations de fichiers STEP techniques — mise en mouvement de modèles CAO avec des animations 3D dynamiques pour la visualisation produit.",
-    hero: "roulette_ue5_hero.mp4",
-    stills: ["roulette_table.png", "roulette_niagara.png"]
+    hero: "Holovisio/CAD/ref_orano.mp4",
+    stills: []
   },
   {
-    title: "Yeman — Wish card",
+    title: "Kanopée associés — Explainer videos and edits",
+    tags: ["Explainer", "Edit"],
+    tools: "After Effects",
+    year: "2026",
+    role: "Motion Design, Edit",
+    client: "Kanopée associés",
+    application: "Broadcast / Explainer",
+    desc: "Explainer videos and editorial edits — clear, fast-paced motion graphics designed to communicate key messages effectively.",
+    desc_fr: "Vidéos explicatives et montages éditoriaux — motion graphics clairs et dynamiques conçus pour communiquer efficacement les messages clés.",
+    hero: "Kanopée associés/Motion_Collectif_1310_Main.mp4",
+    stills: ["Kanopée associés/Link20Avril.mp4"]
+  },
+  {
+    title: "Laodis",
     tags: ["3D"],
     tools: "Blender",
     year: "2025",
     role: "3D Animation",
-    client: "Yeman",
-    application: "Product Film / Loop",
-    desc: "An animated wish card — a crafted 3D animation designed for a polished, looping product film.",
-    desc_fr: "Une carte de vœux animée — une animation 3D soignée conçue pour un film produit en boucle.",
-    hero: "phone_orbit_hero.mp4",
-    stills: ["phone_orbit_still.png"]
+    client: "Laodis",
+    application: "Product",
+    desc: "3D product animation for Laodis.",
+    desc_fr: "Animation 3D produit pour Laodis.",
+    hero: "Laodis/Seconde_Sequence_2.mp4",
+    stills: ["Laodis/Premiere_Sequence.mp4"]
   },
   {
     title: "Recognity - SAMDOC — 3D animation",
@@ -74,7 +102,7 @@ const PROJECTS = [
     application: "Product / Explainer",
     desc: "3D animation for SAMDOC — product-focused motion design combining After Effects and Blender for clear visual storytelling.",
     desc_fr: "Animation 3D pour SAMDOC — motion design orienté produit combinant After Effects et Blender pour un storytelling visuel clair.",
-    hero: "1up_hero.mp4",
+    hero: "samdoc.mp4",
     stills: ["1up_still_01.png"]
   }
 ];
