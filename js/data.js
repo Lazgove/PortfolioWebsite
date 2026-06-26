@@ -89,8 +89,8 @@ const PROJECTS = [
     application: "Product",
     desc: "3D product animation for Laodis.",
     desc_fr: "Animation 3D produit pour Laodis.",
-    hero: "Laodis/laodis_1.mp4",
-    stills: ["Laodis/laodis_2.mp4"]
+    hero: "Laodis/laodis_2.mp4",
+    stills: ["Laodis/laodis_1.mp4"]
   },
   {
     title: "Recognity - SAMDOC — 3D animation",
