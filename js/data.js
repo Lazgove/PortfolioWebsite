@@ -1,9 +1,9 @@
 const PROJECTS = [
   {
     title: "AC Consulting",
-    tags: ["Explainer"],
+    tags: ["Social"],
     tools: "After Effects",
-    year: "2025",
+    year: "2023",
     role: "Motion Design",
     client: "AC Consulting",
     application: "Corporate",
@@ -22,8 +22,8 @@ const PROJECTS = [
     application: "Social / 9:16",
     desc: "Social media video content — 3D animations and compositing designed for vertical social placement.",
     desc_fr: "Contenus vidéo pour les réseaux sociaux — animations 3D et compositing conçus pour un format social vertical.",
-    hero: "expert_impots/expert_impots.mp4",
-    stills: ["expert_impots/Format_4_5.mp4"]
+    hero: "Expert_impots/expert_impots.mp4",
+    stills: ["Expert_impots/Format_4_5.mp4"]
   },
   {
     title: "Fortel",
@@ -35,7 +35,7 @@ const PROJECTS = [
     application: "Product",
     desc: "3D product animation for Fortel.",
     desc_fr: "Animation 3D produit pour Fortel.",
-    hero: "Fortel.mp4",
+    hero: "Fortel/Fortel.mp4",
     stills: []
   },
   {
@@ -63,7 +63,7 @@ const PROJECTS = [
     application: "Product / Technical",
     desc: "Technical STEP file animations — bringing CAD models to life with dynamic 3D animation for product visualization.",
     desc_fr: "Animations de fichiers STEP techniques — mise en mouvement de modèles CAO avec des animations 3D dynamiques pour la visualisation produit.",
-    hero: "Holovisio/CAD/ref_orano.mp4",
+    hero: "Holovisio/CAD/Animation_orano_v4.mp4",
     stills: []
   },
   {
@@ -83,27 +83,27 @@ const PROJECTS = [
     title: "Laodis",
     tags: ["3D"],
     tools: "Blender",
-    year: "2025",
+    year: "2022",
     role: "3D Animation",
     client: "Laodis",
     application: "Product",
     desc: "3D product animation for Laodis.",
     desc_fr: "Animation 3D produit pour Laodis.",
-    hero: "Laodis/Seconde_Sequence_2.mp4",
-    stills: ["Laodis/Premiere_Sequence.mp4"]
+    hero: "Laodis/laodis_1.mp4",
+    stills: ["Laodis/laodis_2.mp4"]
   },
   {
     title: "Recognity - SAMDOC — 3D animation",
     tags: ["3D", "Explainer"],
     tools: "After Effects / Blender",
-    year: "2025",
+    year: "2023",
     role: "Motion Design, 3D",
     client: "Recognity - SAMDOC",
     application: "Product / Explainer",
     desc: "3D animation for SAMDOC — product-focused motion design combining After Effects and Blender for clear visual storytelling.",
     desc_fr: "Animation 3D pour SAMDOC — motion design orienté produit combinant After Effects et Blender pour un storytelling visuel clair.",
-    hero: "samdoc.mp4",
-    stills: ["1up_still_01.png"]
+    hero: "Samdoc/samdoc.mp4",
+    stills: []
   }
 ];
 
