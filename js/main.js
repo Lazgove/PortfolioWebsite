@@ -154,6 +154,9 @@ function openCaseStudy(idx) {
     if (s.endsWith('.mp4')) {
       return `<div class="cs-still"><video src="media/${s}" controls muted playsinline></video></div>`;
     }
+    if (s.endsWith('.gif') || s.endsWith('.jpg') || s.endsWith('.jpeg') || s.endsWith('.png') || s.endsWith('.webp')) {
+      return `<div class="cs-still"><img src="media/${s}" alt="" loading="lazy"></div>`;
+    }
     return `<div class="cs-still"><div class="ph"><span>// ${s}</span></div></div>`;
   }).join('');
 

@@ -2,61 +2,61 @@ const PROJECTS = [
   {
     title: "AC Consulting",
     tags: ["Social"],
-    tools: "After Effects",
+    tools: "After Effects / Cinema 4D",
     year: "2023",
-    role: "Motion Design",
+    role: "Storyboard, Asset Creation, Animation, Simulations",
     client: "AC Consulting",
     application: "Corporate",
-    desc: "Motion design for AC Consulting.",
-    desc_fr: "Motion design pour AC Consulting.",
+    desc: "Motion design for AC Consulting — storyboard, asset creation, animation, and simulations for a brand collaboration reveal, made with After Effects and Cinema 4D.",
+    desc_fr: "Motion design pour AC Consulting — storyboard, création d'assets, animation et simulations pour une révélation de collaboration de marque, réalisée avec After Effects et Cinema 4D.",
     hero: "AC_Consulting/Animation.mp4",
-    stills: []
+    stills: ["AC_Consulting/ac_reveal.gif"]
   },
   {
     title: "Expert impôts — Social media videos",
     tags: ["Social", "3D"],
-    tools: "Blender / AE",
+    tools: "After Effects / Cinema 4D",
     year: "2026",
-    role: "3D Animation, Compositing",
+    role: "Storyboard, Asset Creation, Animation, Simulations",
     client: "Expert impôts",
     application: "Social / 9:16",
-    desc: "Social media video content — 3D animations and compositing designed for vertical social placement.",
-    desc_fr: "Contenus vidéo pour les réseaux sociaux — animations 3D et compositing conçus pour un format social vertical.",
+    desc: "Social media video content for Expert Impôts — storyboard, asset creation, animation, and simulations designed for vertical social placement, made with After Effects and Cinema 4D.",
+    desc_fr: "Contenus vidéo pour les réseaux sociaux d'Expert Impôts — storyboard, création d'assets, animation et simulations conçus pour un format social vertical, réalisés avec After Effects et Cinema 4D.",
     hero: "Expert_impots/expert_impots.mp4",
-    stills: ["Expert_impots/Format_4_5.mp4"]
+    stills: ["Expert_impots/Format_4_5.mp4", "Expert_impots/expert_invest.gif", "Expert_impots/expert_eval.gif", "Expert_impots/expert_save.gif"]
   },
   {
     title: "Fortel",
-    tags: ["3D"],
-    tools: "Blender",
+    tags: ["2D"],
+    tools: "After Effects / Cinema 4D",
     year: "2025",
-    role: "3D Animation",
+    role: "Storyboard, Asset Creation, Animation, Simulations",
     client: "Fortel",
-    application: "Product",
-    desc: "3D product animation for Fortel.",
-    desc_fr: "Animation 3D produit pour Fortel.",
+    application: "Corporate / Greeting card",
+    desc: "Animated New Year's greeting card for Fortel — storyboard, asset creation, animation, and simulations for a celebratory map-based animation highlighting the company's multiple office locations, made with After Effects and Cinema 4D.",
+    desc_fr: "Carte de vœux animée pour Fortel — storyboard, création d'assets, animation et simulations pour une animation festive basée sur une carte, mettant en avant les différents sites de l'entreprise, réalisée avec After Effects et Cinema 4D.",
     hero: "Fortel/Fortel.mp4",
-    stills: []
+    stills: ["Fortel/fortel_map.gif", "Fortel/fortel_greeting.gif"]
   },
   {
     title: "Holovisio — Characters creation and animations",
     tags: ["2D", "3D"],
-    tools: "After Effects",
+    tools: "After Effects / Cinema 4D",
     year: "2025",
-    role: "Motion Design",
+    role: "Storyboard, Asset Creation, Animation, Simulations",
     client: "Holovisio",
     application: "Product / UI Motion",
-    desc: "Character creation and animation — designing and animating original characters for product and brand storytelling.",
-    desc_fr: "Création et animation de personnages — conception et animation de personnages originaux pour le storytelling produit et marque.",
+    desc: "Character creation and animation — storyboard, asset creation, animation, and simulations for original characters designed for product and brand storytelling, made with After Effects and Cinema 4D.",
+    desc_fr: "Création et animation de personnages — storyboard, création d'assets, animation et simulations pour des personnages originaux conçus pour le storytelling produit et marque, réalisés avec After Effects et Cinema 4D.",
     hero: "Holovisio/Characters/To_send_Animation_finale_black.mp4",
     heroStart: 2,
     heroPosition: "top",
-    stills: ["Holovisio/Characters/Render_JPS_1.mp4", "Holovisio/Characters/Simone.mp4"]
+    stills: ["Holovisio/Characters/Render_JPS_1.mp4", "Holovisio/Characters/Simone.mp4", "Holovisio/Characters/holo_gesture.gif", "Holovisio/Characters/holo_talk.gif"]
   },
   {
     title: "Holovisio — STEP files animations",
     tags: ["3D"],
-    tools: "Unreal Engine 5",
+    tools: "After Effects / Cinema 4D",
     year: "2026",
     role: "3D Animation",
     client: "Holovisio",
@@ -64,46 +64,46 @@ const PROJECTS = [
     desc: "Technical STEP file animations — bringing CAD models to life with dynamic 3D animation for product visualization.",
     desc_fr: "Animations de fichiers STEP techniques — mise en mouvement de modèles CAO avec des animations 3D dynamiques pour la visualisation produit.",
     hero: "Holovisio/CAD/Animation_orano_v4.mp4",
-    stills: []
+    stills: ["Holovisio/CAD/cad_drive.gif", "Holovisio/CAD/cad_radar.gif"]
   },
   {
     title: "Kanopée associés — Explainer videos and edits",
     tags: ["Explainer", "Edit"],
-    tools: "After Effects",
+    tools: "After Effects / Cinema 4D",
     year: "2026",
-    role: "Motion Design, Edit",
+    role: "Storyboard, Asset Creation, Animation, Simulations, Edit",
     client: "Kanopée associés",
     application: "Broadcast / Explainer",
-    desc: "Explainer videos and editorial edits — clear, fast-paced motion graphics designed to communicate key messages effectively.",
-    desc_fr: "Vidéos explicatives et montages éditoriaux — motion graphics clairs et dynamiques conçus pour communiquer efficacement les messages clés.",
+    desc: "Explainer videos and editorial edits — storyboard, asset creation, animation, and simulations combined with editorial edits, made with After Effects and Cinema 4D.",
+    desc_fr: "Vidéos explicatives et montages éditoriaux — storyboard, création d'assets, animation et simulations combinés à des montages éditoriaux, réalisés avec After Effects et Cinema 4D.",
     hero: "Kanopée associés/Motion_Collectif_1310_Main.mp4",
-    stills: ["Kanopée associés/Link20Avril.mp4"]
+    stills: ["Kanopée associés/Link20Avril.mp4", "Kanopée associés/kanopee_stat.gif", "Kanopée associés/kanopee_wipe.gif"]
   },
   {
     title: "Laodis",
     tags: ["3D"],
-    tools: "Blender",
+    tools: "After Effects / Cinema 4D",
     year: "2022",
-    role: "3D Animation",
+    role: "Storyboard, Asset Creation, Animation, Simulations",
     client: "Laodis",
     application: "Product",
-    desc: "3D product animation for Laodis.",
-    desc_fr: "Animation 3D produit pour Laodis.",
+    desc: "3D product animation for Laodis — storyboard, asset creation, animation, and simulations, made with After Effects and Cinema 4D.",
+    desc_fr: "Animation 3D produit pour Laodis — storyboard, création d'assets, animation et simulations, réalisée avec After Effects et Cinema 4D.",
     hero: "Laodis/laodis_2.mp4",
-    stills: ["Laodis/laodis_1.mp4"]
+    stills: ["Laodis/laodis_1.mp4", "Laodis/laodis_multi.gif"]
   },
   {
     title: "Recognity - SAMDOC — 3D animation",
     tags: ["3D", "Explainer"],
-    tools: "After Effects / Blender",
+    tools: "After Effects / Cinema 4D",
     year: "2023",
-    role: "Motion Design, 3D",
+    role: "Asset Creation, Animation, Simulations",
     client: "Recognity - SAMDOC",
     application: "Product / Explainer",
-    desc: "3D animation for SAMDOC — product-focused motion design combining After Effects and Blender for clear visual storytelling.",
-    desc_fr: "Animation 3D pour SAMDOC — motion design orienté produit combinant After Effects et Blender pour un storytelling visuel clair.",
+    desc: "3D animation for SAMDOC, made in collaboration with two other artists who handled the screenplay and storyboard — I built the assets, animation, and simulations from their shot ideas, using After Effects and Cinema 4D.",
+    desc_fr: "Animation 3D pour SAMDOC, réalisée en collaboration avec deux autres artistes en charge du scénario et du storyboard — j'ai créé les assets, l'animation et les simulations à partir de leurs idées de plans, avec After Effects et Cinema 4D.",
     hero: "Samdoc/samdoc.mp4",
-    stills: []
+    stills: ["Samdoc/samdoc_pod.gif", "Samdoc/samdoc_bins.gif", "Samdoc/samdoc_logo.gif"]
   }
 ];
 
