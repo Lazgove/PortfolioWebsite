@@ -345,6 +345,7 @@ footer .legal{ grid-column:1 / -1; }
 }
 
 @media (max-width:899px){
+  .aurora{ opacity:.55; }
   .aurora .b3, .fl-ring, .fl-dot{ display:none; }
   .aurora i{ width:90vmax; height:90vmax; }
   .aurora .b1{ left:20%; top:-20%; }
