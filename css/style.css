@@ -385,7 +385,7 @@ footer .legal{ grid-column:1 / -1; }
 /* ============ PLAYGROUND ============ */
 .section-title{
   font-family:var(--font-display); font-weight:800; font-stretch:85%;
-  font-size:var(--step-3); line-height:var(--lh-tight); letter-spacing:var(--track-display);
+  font-size:var(--step-3); line-height:var(--lh-tight); letter-spacing:-0.015em;
 }
 .playground-hero{
   padding:calc(var(--header-h) + var(--s-8)) var(--gutter) var(--s-6);
@@ -561,6 +561,7 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 }
 .contact-mail:hover .mail-wipe,
 .contact-mail:focus-visible .mail-wipe{ clip-path:inset(0 0 0 0); }
+@media (max-width:600px){ .contact-mail{ font-size:5.6vw; } }
 .contact-text{ color:var(--ink-dim); max-width:56ch; }
 .contact-row{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--s-3) var(--s-6); }
 .contact-row .text-link{ color:var(--ink-dim); }
