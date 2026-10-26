@@ -280,7 +280,7 @@ function splitChars(el) {
   vis.setAttribute('aria-hidden', 'true');
   [...text].forEach(ch => {
     const s = document.createElement('span');
-    s.className = 'char';
+    s.className = ch === '+' ? 'char plus' : 'char';
     s.textContent = ch;
     vis.appendChild(s);
   });

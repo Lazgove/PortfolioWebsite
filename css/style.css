@@ -1,18 +1,43 @@
-/* ============ FONT FALLBACK (limits layout shift when the web fonts arrive) ============ */
+/* ============ FONTS: self-hosted, SIL OFL, about 99 KB in total ============ */
 @font-face{
-  font-family:'Bricolage Fallback';
-  src:local('Arial');
-  size-adjust:96%;
-  ascent-override:92%;
-  descent-override:24%;
+  font-family:"Bricolage Grotesque";
+  src:url("/fonts/bricolage-display.woff2") format("woff2");
+  font-weight:600 800;
+  font-stretch:75% 100%;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Instrument Sans";
+  src:url("/fonts/instrument-sans.woff2") format("woff2");
+  font-weight:400 700;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Geist Mono";
+  src:url("/fonts/geist-mono.woff2") format("woff2");
+  font-weight:400 500;
+  font-style:normal;
+  font-display:swap;
+}
+
+/* size adjusted fallbacks, measured against Arial (Liberation Sans is metric identical) */
+@font-face{
+  font-family:"Bricolage Fallback";
+  src:local("Arial Bold"), local("Liberation Sans Bold"), local("Arial");
+  font-weight:600 800;
+  size-adjust:89.2%;
+  ascent-override:104.3%;
+  descent-override:30.3%;
   line-gap-override:0%;
 }
 @font-face{
-  font-family:'Instrument Fallback';
-  src:local('Arial');
-  size-adjust:98%;
-  ascent-override:96%;
-  descent-override:25%;
+  font-family:"Instrument Fallback";
+  src:local("Arial"), local("Liberation Sans");
+  size-adjust:102.5%;
+  ascent-override:94.7%;
+  descent-override:24.4%;
   line-gap-override:0%;
 }
 
@@ -48,16 +73,18 @@
   --aurora-o: .22;
 
   /* type */
-  --font-display: 'Bricolage Grotesque', 'Bricolage Fallback', 'Helvetica Neue', Arial, sans-serif;
-  --font-body:    'Instrument Sans', 'Instrument Fallback', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: "Bricolage Grotesque", "Bricolage Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Instrument Sans", "Instrument Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
 
-  --step--1: clamp(0.8125rem, 0.79rem + 0.10vw, 0.875rem);
-  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.12rem);
-  --step-1:  clamp(1.25rem, 1.15rem + 0.50vw, 1.55rem);
+  /* fluid scale, 360 to 1440 px viewport */
+  --step--1: clamp(0.78rem, 0.76rem + 0.10vw, 0.84rem);   /* captions, credits */
+  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.12rem);   /* body */
+  --step-1:  clamp(1.25rem, 1.15rem + 0.50vw, 1.55rem);   /* lead, card titles */
   --step-2:  clamp(1.60rem, 1.35rem + 1.25vw, 2.40rem);
-  --step-3:  clamp(2.10rem, 1.60rem + 2.50vw, 3.80rem);
-  --step-4:  clamp(2.60rem, 1.90rem + 4.50vw, 6.00rem);
-  --step-5:  clamp(3.40rem, 1.60rem + 9.00vw, 11.50rem);
+  --step-3:  clamp(2.10rem, 1.60rem + 2.50vw, 3.80rem);   /* section titles */
+  --step-4:  clamp(2.80rem, 1.90rem + 4.50vw, 6.00rem);   /* case study title */
+  --step-5:  clamp(3.40rem, 1.60rem + 9.00vw, 11.50rem);  /* hero */
 
   --lh-tight: 0.92;
   --lh-snug:  1.15;
@@ -137,7 +164,7 @@ img, video{ display:block; max-width:100%; }
 button{ font:inherit; color:inherit; }
 ul{ list-style:none; }
 ::selection{ background:var(--accent-soft); color:var(--ink); }
-.num{ font-variant-numeric:tabular-nums; }
+.num{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; letter-spacing:0; }
 
 :focus-visible{
   outline:3px solid var(--focus);
@@ -473,8 +500,8 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 .caption{ display:grid; gap:2px; padding-top:var(--s-3); }
 .cap-top{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--s-4); }
 .cap-client{
-  font-family:var(--font-display); font-weight:700; font-stretch:90%;
-  font-size:var(--step-1); line-height:var(--lh-snug); letter-spacing:-0.02em;
+  font-family:var(--font-display); font-weight:700; font-stretch:100%;
+  font-size:var(--step-1); line-height:var(--lh-snug); letter-spacing:-0.005em;
 }
 .cap-year{ font-size:var(--step--1); color:var(--ink-dim); }
 .cap-sub{ font-size:var(--step-0); color:var(--ink-dim); line-height:1.35; }
@@ -564,6 +591,7 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 }
 .hero-title .line{ display:block; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em; }
 .hero-title .line > span:not(.sr-only){ display:inline-block; }
+.hero-title .plus{ margin-left:.05em; }
 .hero-title .line + .line{ color:var(--ink-dim); }
 .hero-sub{ margin-top:var(--s-5); max-width:52ch; font-size:var(--step-1); line-height:1.4; color:var(--ink); }
 .hero-links{ margin-top:var(--s-4); display:flex; flex-wrap:wrap; gap:0 var(--s-6); }
@@ -578,7 +606,7 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 .m-vid{ opacity:0; transition:opacity 400ms linear; }
 .m-vid.on{ opacity:1; }
 .monitor-bar{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--s-4); padding-top:var(--s-2); font-size:var(--step--1); color:var(--ink-dim); }
-.monitor-tc{ color:var(--ink); font-weight:600; }
+.monitor-tc{ color:var(--ink); font-weight:500; }
 
 .hero-ruler{ margin-top:var(--s-6); margin-inline:calc(var(--gutter) * -1); }
 
@@ -692,7 +720,7 @@ html.cs-lock{ overflow:hidden; }
 .cs-desc{ margin-top:var(--s-5); color:var(--ink-dim); max-width:62ch; }
 .cs-credits{ grid-column:9 / -1; align-self:start; border-top:1px solid var(--line); }
 .cs-credits > div{ display:grid; grid-template-columns:5.5rem 1fr; gap:var(--s-3); padding:var(--s-3) 0; border-bottom:1px solid var(--line); }
-.cs-credits dt{ color:var(--ink-dim); font-size:var(--step--1); }
+.cs-credits dt{ color:var(--ink-dim); font-family:var(--font-mono); font-size:var(--step--1); }
 .cs-credits dd{ font-weight:500; }
 
 .cs-media{ max-width:1100px; display:grid; gap:var(--grid-gap); }
