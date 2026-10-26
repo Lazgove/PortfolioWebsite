@@ -67,8 +67,11 @@ PROJECTS.forEach((p, i) => {
 
   const isVideo = p.hero && p.hero.endsWith('.mp4');
   const posStyle = p.heroPosition ? ` style="object-position:${p.heroPosition}"` : '';
+  // Grid tiles use a light 6s preview (about 50 KB to 400 KB). The full video only loads in the case study.
   const mediaHtml = isVideo
-    ? `<video class="tile-video" src="media/${p.hero}" autoplay loop muted playsinline${posStyle}${p.heroStart ? ` data-start="${p.heroStart}"` : ''}></video>`
+    ? (p.preview
+        ? `<video class="tile-video" data-src="media/${p.preview}.mp4" poster="media/${p.preview}.jpg" loop muted playsinline preload="none" aria-hidden="true"${posStyle}></video>`
+        : `<video class="tile-video" data-src="media/${p.hero}" loop muted playsinline preload="none" aria-hidden="true"${posStyle}${p.heroStart ? ` data-start="${p.heroStart}"` : ''}></video>`)
     : `<div class="ph"></div>`;
 
   tile.innerHTML = `
@@ -82,8 +85,40 @@ PROJECTS.forEach((p, i) => {
   if (vid) {
     vid.addEventListener('loadedmetadata', () => { vid.currentTime = parseFloat(vid.dataset.start); });
   }
+  tile.setAttribute('role', 'button');
+  tile.setAttribute('tabindex', '0');
+  tile.setAttribute('aria-label', p.title);
   tile.addEventListener('click', () => openCaseStudy(i));
+  tile.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCaseStudy(i); }
+  });
   gridEl.appendChild(tile);
+});
+
+/* ============ PLAY TILE VIDEOS ONLY WHEN VISIBLE ============ */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const tileVideos = document.querySelectorAll('.tile-video[data-src]');
+const tileObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const v = entry.target;
+        if (entry.isIntersecting) {
+          if (!v.src) {
+            v.src = v.dataset.src;
+            if (v.dataset.start) {
+              v.addEventListener('loadedmetadata', () => { v.currentTime = parseFloat(v.dataset.start); }, { once: true });
+            }
+          }
+          if (!reduceMotion) v.play().catch(() => {});
+        } else if (v.src) {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.25, rootMargin: '100px' })
+  : null;
+tileVideos.forEach(v => {
+  if (tileObserver) tileObserver.observe(v);
+  else { v.src = v.dataset.src; if (!reduceMotion) v.play().catch(() => {}); }
 });
 
 /* ============ FILTER BAR ============ */
@@ -134,7 +169,8 @@ function openCaseStudy(idx) {
 
   const heroEl = document.querySelector('.cs-hero');
   if (p.hero && p.hero.endsWith('.mp4')) {
-    heroEl.innerHTML = `<video src="media/${p.hero}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>`;
+    const heroPoster = p.preview ? ` poster="media/${p.preview}.jpg"` : '';
+    heroEl.innerHTML = `<video src="media/${p.hero}"${heroPoster} autoplay loop muted playsinline preload="auto" aria-label="${p.title}" style="width:100%;height:100%;object-fit:cover;"></video>`;
   } else {
     heroEl.innerHTML = `<div class="ph"><span id="csHeroLabel">// ${p.hero}</span></div>`;
   }
@@ -150,12 +186,12 @@ function openCaseStudy(idx) {
   `;
 
   const mediaEl = document.getElementById('csMedia');
-  mediaEl.innerHTML = p.stills.map(s => {
+  mediaEl.innerHTML = p.stills.map((s, n) => {
     if (s.endsWith('.mp4')) {
-      return `<div class="cs-still"><video src="media/${s}" controls muted playsinline></video></div>`;
+      return `<div class="cs-still"><video src="media/${s}" controls muted playsinline preload="metadata" aria-label="${p.title}, video ${n + 1}"></video></div>`;
     }
     if (s.endsWith('.gif') || s.endsWith('.jpg') || s.endsWith('.jpeg') || s.endsWith('.png') || s.endsWith('.webp')) {
-      return `<div class="cs-still"><img src="media/${s}" alt="" loading="lazy"></div>`;
+      return `<div class="cs-still"><img src="media/${s}" alt="${p.title}, scene ${n + 1}" loading="lazy" decoding="async"></div>`;
     }
     return `<div class="cs-still"><div class="ph"><span>// ${s}</span></div></div>`;
   }).join('');
