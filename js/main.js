@@ -75,6 +75,7 @@ PROJECTS.forEach((p, i) => {
       <svg class="tile-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
     </div>
     <div class="caption-wrap"></div>`;
+  if (p.color) tile.style.setProperty('--pc', p.color);
   gridEl.appendChild(tile);
   tileEls.push(tile);
 });
@@ -383,6 +384,33 @@ monitor.el.addEventListener('click', (e) => {
   if (idx > -1) openCase(idx, monitor.el);
 });
 
+/* ============ HERO COLOR MOTION: pause when idle, gentle pointer parallax ============ */
+(function () {
+  const hero = $('.hero');
+  const fl = $('.floaters');
+  if (!hero) return;
+  let seen = true;
+  const sync = () => hero.classList.toggle('mo-off', !seen || document.hidden);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((es) => { seen = es[0].isIntersecting; sync(); }, { threshold: 0 }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', sync);
+  if (!fl || !FINE.matches || !motionOK()) return;
+  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  const step = () => {
+    cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+    fl.style.setProperty('--px', cx.toFixed(3));
+    fl.style.setProperty('--py', cy.toFixed(3));
+    raf = (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 && seen && !document.hidden) ? requestAnimationFrame(step) : 0;
+  };
+  window.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || !seen) return;
+    tx = (e.clientX / innerWidth - 0.5) * 2;
+    ty = (e.clientY / innerHeight - 0.5) * 2;
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: true });
+})();
+
 /* ============ CASE STUDY (dialog) ============ */
 const caseStudy = $('#caseStudy');
 const csClose = $('#csClose');
@@ -472,6 +500,7 @@ function renderCase(idx) {
   $('#csMedia').innerHTML = renderCaseStills(p);
   renderCaseText(idx);
   csIdx = idx;
+  if (p.color) caseStudy.style.setProperty('--pc', p.color); else caseStudy.style.removeProperty('--pc');
   csScroll.scrollTop = 0;
 }
 
