@@ -538,12 +538,16 @@ function focusAfterClose() {
   if (target === $('#workTitle')) target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
 }
+let csClosing = false;
 function doClose() {
-  if (!csIsOpen()) return;
+  if (!csIsOpen() || csClosing) return;
+  csClosing = true;
   const tile = tileEls[csIdx];
   const canMorph = tile && !tile.classList.contains('hidden') && csScroll.scrollTop < 4 &&
     (() => { const r = tile.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; })();
   const finish = () => {
+    csClosing = false;
+    if (canMorph && document.startViewTransition && motionOK()) tile.classList.add('is-source');
     pageOverlayOff();
     csUnloadVideos();
     csStage.innerHTML = '';
@@ -554,7 +558,7 @@ function doClose() {
   };
   if (!motionOK()) { finish(); return; }
   if (document.startViewTransition) {
-    if (canMorph) { tile.classList.add('is-source'); rootEl.classList.add('vt-tile-active'); }
+    if (canMorph) rootEl.classList.add('vt-tile-active');
     const vt = document.startViewTransition(finish);
     vt.finished.finally(() => { rootEl.classList.remove('vt-tile-active'); if (tile) tile.classList.remove('is-source'); });
   } else {
