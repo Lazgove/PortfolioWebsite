@@ -3,140 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guillaume Abramovici — Motion Design</title>
-<meta name="description" content="Guillaume Abramovici — 2D/3D Motion Designer & Creative Technologist working across broadcast, real-time, and 3D.">
-
+<title>Guillaume Abramovici: Motion Design</title>
+<meta name="description" content="Guillaume Abramovici, 2D/3D Motion Designer and Creative Technologist working across broadcast, real-time and 3D.">
+<script>
+/* Apply saved theme and language before first paint */
+try {
+  var th = localStorage.getItem('theme');
+  if (!th) th = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  if (th === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  if (localStorage.getItem('lang') === 'fr') document.documentElement.lang = 'fr';
+} catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#17171A">
+<meta name="theme-color" content="#11121C">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Guillaume Abramovici — Motion Design">
-<meta property="og:description" content="2D/3D Motion Designer &amp; Creative Technologist working across broadcast, real-time, and 3D.">
+<meta property="og:title" content="Guillaume Abramovici: Motion Design">
+<meta property="og:description" content="2D/3D Motion Designer and Creative Technologist working across broadcast, real-time and 3D.">
 <meta property="og:url" content="https://guillaumeabramovici.netlify.app/">
 <meta property="og:image" content="https://guillaumeabramovici.netlify.app/media/previews/fortel-fortel.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body data-page="home">
+<a class="skip" href="#work" data-i18n="a11y.skip">Skip to work</a>
 
-
-<header>
-  <div class="logo">GUI<span style="color:var(--accent)">.</span></div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span></button>
-  <nav>
+<div id="page">
+<header class="site-header" id="siteHeader">
+  <a class="logo" href="#top" data-i18n-label="a11y.home" aria-label="Guillaume Abramovici, home">GUI<span class="dot">.</span></a>
+  <nav id="siteNav" aria-label="Main">
     <ul>
-      <li><a href="#work" class="active" data-i18n="nav.work">Work</a></li>
-      <li><a href="playground.html" data-i18n="nav.playground">Playground</a></li>
+      <li><a href="#work" data-i18n="nav.work">Work</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      <li class="nav-cv-item"><a href="media/Guillaume_Abramovici_CV.pdf" download data-i18n="cv.download">Download CV</a></li>
     </ul>
   </nav>
   <div class="header-actions">
-    <a href="media/Guillaume_Abramovici_CV.pdf" download class="header-btn" aria-label="Download CV">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    <a href="media/Guillaume_Abramovici_CV.pdf" download class="header-btn cv-link" data-i18n-label="a11y.cv" aria-label="Download CV">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       <span data-i18n="cv.label">CV</span>
     </a>
-    <button class="header-btn" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    <button class="header-btn" id="themeToggle" type="button" aria-pressed="false" data-i18n-label="a11y.theme" aria-label="Switch between light and dark mode">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
     </button>
-    <button class="header-btn" id="langToggle" aria-label="Switch language">FR</button>
+    <button class="header-btn" id="langToggle" type="button" lang="fr" aria-label="Passer en français">FR</button>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" data-i18n-label="a11y.menu" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
 
+<main>
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="eyebrow" data-i18n="hero.eyebrow">Motion Designer — Open to work</div>
-    <h1 class="hero-title">
-      <span class="line"><span>Motion</span></span>
-      <span class="line"><span>Design+</span></span>
-    </h1>
-    <p class="hero-sub" data-i18n="hero.sub">Guillaume — building broadcast graphics, 3D product animation, and real-time interactive experiences. 5+ years freelance, currently exploring UE5 for live, data-driven motion.</p>
-    <div class="hero-skills">
-      <span class="skill-tag">After Effects</span>
-      <span class="skill-tag">Premiere Pro</span>
-      <span class="skill-tag">Photoshop</span>
-      <span class="skill-tag">Illustrator</span>
-      <span class="skill-tag">Audition</span>
-      <span class="skill-tag">Cinema 4D</span>
-      <span class="skill-tag">Blender</span>
-      <span class="skill-tag">Houdini</span>
-      <span class="skill-tag">Substance Painter</span>
-      <span class="skill-tag">Octane Render</span>
-      <span class="skill-tag">Unreal Engine</span>
-      <span class="skill-tag">Unity</span>
-      <span class="skill-tag">FL Studio</span>
-      <span class="skill-tag">Python</span>
-      <span class="skill-tag">C/C++</span>
-      <span class="skill-tag">HTML / CSS / JS</span>
-      <span class="skill-tag">Three.js</span>
-      <span class="skill-tag">OpenFrameworks</span>
-      <span class="skill-tag">OpenCV</span>
-      <span class="skill-tag">Git</span>
+  <span class="playhead" aria-hidden="true"></span>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Motion Designer, open to work</span></p>
+      <h1 class="hero-title"><span class="sr-only" data-i18n="hero.h1.name">Guillaume Abramovici, </span><span class="line"><span>Motion</span></span><span class="line"><span>Design+</span></span></h1>
+      <p class="hero-sub" data-i18n="hero.sub">I build broadcast graphics, 3D product animation and real-time interactive work. 5+ years freelance, currently exploring UE5 for live, data-driven motion.</p>
+      <p class="hero-links">
+        <a class="text-link" href="https://vimeo.com/787304740" target="_blank" rel="noopener" data-i18n="hero.reel">Watch showreel</a>
+        <a class="text-link" href="media/Guillaume_Abramovici_CV.pdf" download data-i18n="cv.download">Download CV</a>
+      </p>
     </div>
-    <div class="hero-meta">
-      <div><b data-i18n="hero.focus">Focus</b><span data-i18n="hero.focus.val">Social Media · CAD Animations · Explainers · Character Animations · Logo & Kinetic Typography · Product Visualization · UI/UX Motion · Event & Advertising</span></div>
-      <div><b data-i18n="hero.based">Based</b><span data-i18n="hero.based.val">Paris, France</span></div>
-    </div>
+    <a class="monitor" id="monitor" href="#work" data-cursor="view" data-i18n-label="hero.monitor" aria-label="Open this project">
+      <span class="monitor-screen">
+        <img class="m-poster" alt="" width="720" height="450" decoding="async">
+        <video class="m-vid is-a" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+        <video class="m-vid is-b" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+      </span>
+      <span class="monitor-bar">
+        <span class="monitor-tc num" id="monitorTc" aria-hidden="true">0:00.0</span>
+        <span class="monitor-name" id="monitorName"></span>
+      </span>
+    </a>
+    <dl class="tools">
+      <div><dt data-i18n="tools.motion">Motion</dt><dd>After Effects, Premiere Pro, Audition, Illustrator, Photoshop</dd></div>
+      <div><dt data-i18n="tools.3d">3D</dt><dd>Cinema 4D, Blender, Houdini, Substance Painter, Octane Render</dd></div>
+      <div><dt data-i18n="tools.code">Real-time and code</dt><dd>Unreal Engine, Unity, Three.js, OpenFrameworks, OpenCV, Python, C/C++, HTML / CSS / JS, Git</dd></div>
+      <div><dt data-i18n="tools.sound">Sound</dt><dd>FL Studio</dd></div>
+    </dl>
+    <p class="hero-based" data-i18n="hero.based">Paris, France</p>
   </div>
-  <div class="scroll-cue"><div class="bar"></div><span data-i18n="scroll">SCROLL</span></div>
+  <div class="hero-ruler ruler" aria-hidden="true"></div>
 </section>
 
 <!-- ============ WORK ============ -->
-<section class="work-section" id="work">
-  <div class="section-label"><b data-i18n="work.label">Selected Work</b> 2022 — 2026</div>
-  <div class="filter-bar" id="filter-bar"></div>
+<section class="work" id="work" aria-labelledby="workTitle">
+  <div class="section-head">
+    <h2 class="section-title" id="workTitle" data-i18n="work.label">Selected work</h2>
+    <p class="section-meta num"><span id="workRange"></span><span class="meta-sep" aria-hidden="true"> · </span><span id="workCount"></span></p>
+  </div>
+  <p class="work-focus" data-i18n="work.focus">Social media, CAD animation, explainers, character animation, logo and kinetic typography, product visualization, UI and UX motion, events and advertising.</p>
+  <div class="filters" id="filters" role="group" data-i18n-label="filter.label" aria-label="Filter projects"></div>
   <div class="project-grid" id="project-grid"></div>
+  <noscript><p class="noscript-note"><a href="https://vimeo.com/787304740" data-i18n="noscript">The project grid needs JavaScript. You can watch the showreel instead.</a></p></noscript>
 </section>
 
-
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about" aria-labelledby="aboutTitle">
+  <h2 class="sr-only" id="aboutTitle" data-i18n="about.label">About</h2>
+  <p class="about-lead" data-i18n-html="about.h2">Motion that has to <span class="accent">read instantly</span>, and still feel considered.</p>
+  <p class="about-text" data-i18n="about.p">2D/3D Motion Designer with over 5 years of experience creating animated content for brands, products, and digital platforms. Passionate about combining design and technology to produce engaging visual storytelling. Experienced in producing explainer animations, marketing videos, event teasers, and social media content. With a strong technical background in both motion design and software development, delivering efficient production workflows and technically advanced visuals across every project.</p>
+</section>
 
 <!-- ============ CONTACT ============ -->
-<section class="panel" id="contact">
-  <div class="section-label" style="padding:0 0 8px 0;"><b data-i18n="contact.label">Contact</b> 01</div>
-  <h2 data-i18n="contact.h2">Got a project in mind?</h2>
-  <a href="mailto:guillaume.abramovici@outlook.fr" class="contact-cta">
-    guillaume.abramovici@outlook.fr
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+<section class="contact" id="contact" aria-labelledby="contactTitle">
+  <h2 class="section-title" id="contactTitle" data-i18n="contact.h2">Got a project in mind?</h2>
+  <a href="mailto:guillaume.abramovici@outlook.fr" class="contact-mail" aria-label="guillaume.abramovici@outlook.fr">
+    <span class="mail-base">guillaume.abramovici@outlook.fr</span>
+    <span class="mail-wipe" aria-hidden="true">guillaume.abramovici@outlook.fr</span>
   </a>
-  <p data-i18n="contact.p">Currently available for freelance and full-time motion design roles.</p>
-  <a href="tel:+33637300318" class="contact-phone">+33 6 37 30 03 18</a>
-  <a href="media/Guillaume_Abramovici_CV.pdf" download class="cv-btn">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-    <span data-i18n="cv.download">Download CV</span>
-  </a>
+  <p class="contact-text" data-i18n="contact.p">Currently available for freelance and full-time motion design roles.</p>
+  <div class="contact-row">
+    <a href="media/Guillaume_Abramovici_CV.pdf" download class="btn-fill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span data-i18n="cv.download">Download CV</span>
+    </a>
+  </div>
 </section>
+</main>
 
 <footer>
-  <div class="col"><b data-i18n="footer.hours">Hours</b><span data-i18n="footer.hours.val">Mon — Fri</span><br>10:00 — 18:00</div>
+  <div class="col"><b data-i18n="footer.hours">Hours</b><span data-i18n="footer.hours.val">Mon to Fri</span><br><span class="num">10:00 to 18:00</span></div>
   <div class="col"><b data-i18n="footer.follow">Follow</b><a href="https://www.instagram.com/lazlanove/" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.malt.fr/profile/guillaumeabramovici" target="_blank" rel="noopener">Malt</a><br><a href="https://www.linkedin.com/in/guillaumeabramovici/" target="_blank" rel="noopener">LinkedIn</a><br><a href="https://vimeo.com/787304740" target="_blank" rel="noopener">Showreel</a></div>
-  <div class="col"><b>Guillaume Abramovici</b><span data-i18n="footer.role">Motion Design</span><br><a href="mailto:guillaume.abramovici@outlook.fr">guillaume.abramovici@outlook.fr</a></div>
+  <div class="col"><b data-i18n="footer.more">More</b><a href="playground.html" data-i18n="nav.playground">Playground</a></div>
+  <div class="col"><b>Guillaume Abramovici</b><span data-i18n="footer.role">Motion Design</span><br><a href="mailto:guillaume.abramovici@outlook.fr">guillaume.abramovici@outlook.fr</a><br><span>Paris, <span class="num" data-clock>--:--</span></span></div>
+  <div class="legal ruler" aria-hidden="true"></div>
 </footer>
+</div>
 
 <!-- ============ CASE STUDY OVERLAY ============ -->
-<div class="case-study" id="caseStudy">
-  <div class="cs-close" id="csClose">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    <span data-i18n="cs.close">CLOSE</span>
-  </div>
-  <div class="cs-hero"><div class="ph"><span id="csHeroLabel">// hero_still.jpg</span></div></div>
-  <div class="cs-body">
-    <h2 class="cs-title" id="csTitle">Project Title</h2>
-    <p class="cs-desc" id="csDesc">Description goes here.</p>
-    <div class="cs-credits" id="csCredits"></div>
-    <div id="csMedia"></div>
-    <div class="cs-next">
-      <span style="font-family:var(--sans);font-weight:500;font-size:11px;color:var(--ink-dim);letter-spacing:0.06em;text-transform:uppercase;" data-i18n="cs.next.label">Next project</span>
-      <a href="#" id="csNext">Next Project Name</a>
+<div class="case-study" id="caseStudy" role="dialog" aria-modal="true" aria-labelledby="csTitle" inert>
+  <button class="cs-close" id="csClose" type="button">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <span data-i18n="cs.close">Close</span>
+  </button>
+  <div class="cs-scroll" id="csScroll">
+    <div class="cs-stage" id="csStage"></div>
+    <div class="cs-body">
+      <div class="cs-head">
+        <div class="cs-titles">
+          <h2 class="cs-title" id="csTitle"><span class="cs-client"></span><span class="cs-sub"></span></h2>
+          <p class="cs-desc" id="csDesc"></p>
+        </div>
+        <dl class="cs-credits" id="csCredits"></dl>
+      </div>
+      <div class="cs-media" id="csMedia"></div>
+      <div class="cs-foot">
+        <a class="cs-next" id="csNext" href="#" data-cursor="">
+          <span class="cs-next-label" data-i18n="cs.next.label">Next project</span>
+          <span class="cs-next-title" id="csNextTitle"></span>
+          <img class="cs-next-thumb" id="csNextThumb" alt="" width="240" height="150">
+        </a>
+        <p class="cs-links">
+          <button type="button" class="text-link" id="csBack" data-i18n="cs.back">Back to all work</button>
+          <a class="text-link" href="#contact" id="csContact" data-i18n="cs.contact">Contact me about a project like this</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>
 
+<div class="cursor" aria-hidden="true"><span></span></div>
+
 <script src="js/data.js"></script>
+<script src="js/common.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -3,30 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found — Gui</title>
+<title>Page not found</title>
+<script>
+/* Apply saved theme and language before first paint */
+try {
+  var th = localStorage.getItem('theme');
+  if (!th) th = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  if (th === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  if (localStorage.getItem('lang') === 'fr') document.documentElement.lang = 'fr';
+} catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#11121C">
 <style>
-  body{
-    margin:0; min-height:100vh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    background:#FFFFFF; color:#17171A;
-    font-family:'Roboto', sans-serif;
-    text-align:center; padding:20px;
-  }
-  h1{ font-size:clamp(48px,10vw,96px); margin:0; letter-spacing:-0.02em; font-family:'Bricolage Grotesque', sans-serif; font-weight:800; }
-  p{ color:#6E6E76; font-family:'Roboto', sans-serif; margin:16px 0 28px; }
-  a{ color:#17171A; text-decoration:none; font-family:'Roboto', sans-serif; font-weight:500; font-size:13px; letter-spacing:0.02em; border:1px solid #D4D4D9; padding:11px 24px; border-radius:999px; }
-  a:hover{ border-color:#6D74D6; background:#6D74D6; color:#FFFFFF; }
+  body{ min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:var(--gutter); }
+  .nf-code{ font-family:var(--font-display); font-weight:800; font-stretch:85%; font-size:var(--step-5); line-height:var(--lh-tight); letter-spacing:var(--track-display); }
+  .nf-text{ color:var(--ink-dim); margin:var(--s-4) 0 var(--s-6); max-width:52ch; }
+  .nf-link{ display:inline-flex; align-items:center; min-height:var(--tap); padding:0 var(--s-5); width:fit-content; background:var(--accent-text); color:var(--on-accent); border-radius:var(--r-chip); font-weight:600; }
+  .nf-link:hover{ background:var(--ink); color:var(--bg); }
+  .nf-ruler{ margin-top:var(--s-7); }
 </style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#17171A">
 </head>
 <body>
-  <h1>404</h1>
-  <p>This page doesn't exist.</p>
-  <a href="/">← Back to home</a>
+  <h1 class="nf-code">404</h1>
+  <p class="nf-text" id="nfText">This page does not exist. The link may be old, or the address may have a typo.</p>
+  <a class="nf-link" href="/" id="nfLink">Back to home</a>
+  <div class="ruler nf-ruler" aria-hidden="true"></div>
+  <script>
+    if (document.documentElement.lang === 'fr') {
+      document.title = 'Page introuvable';
+      document.getElementById('nfText').textContent = "Cette page n'existe pas. Le lien est peut-être ancien, ou l'adresse contient une faute de frappe.";
+      document.getElementById('nfLink').textContent = "Retour à l'accueil";
+    }
+  </script>
 </body>
 </html>
-
