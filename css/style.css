@@ -550,13 +550,18 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 }
 .hero-copy{ grid-column:1 / span 7; grid-row:1; }
 .monitor{ grid-column:8 / -1; grid-row:1; display:block; min-width:0; }
-/* desktop: top of the preview lines up with the top of the headline block, and it is taller so no empty band sits above it */
+/* desktop: the preview spans exactly the rows of the headline and the description, so its top lines up with
+   "Motion" and its bottom with the last line of the text. The timecode bar hangs just below it. */
 @media (min-width:900px){
-  .monitor{ align-self:start; }
-  .monitor .monitor-screen{ aspect-ratio:4 / 3; }
+  .hero-grid{ row-gap:0; align-items:start; }
+  .hero-copy{ grid-row:1 / span 4; display:grid; grid-template-rows:subgrid; }
+  .monitor{ grid-row:2 / span 2; align-self:stretch; display:flex; flex-direction:column; position:relative; margin-top:calc(var(--step-5) * .075); } /* lines up with the cap height of "Motion", not the line box */
+  .monitor .monitor-screen{ flex:1 1 auto; aspect-ratio:auto; min-height:0; }
+  .monitor .monitor-bar{ position:absolute; top:100%; left:0; right:0; }
 }
 .tools{ grid-column:1 / span 7; grid-row:2; }
 .hero-based{ grid-column:8 / -1; grid-row:2; color:var(--ink-dim); font-size:var(--step--1); }
+@media (min-width:900px){ .tools, .hero-based{ grid-row:5; margin-top:var(--s-6); } }
 
 .hero-status{
   display:flex; align-items:center; gap:var(--s-3);
