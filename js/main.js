@@ -384,10 +384,9 @@ monitor.el.addEventListener('click', (e) => {
   if (idx > -1) openCase(idx, monitor.el);
 });
 
-/* ============ HERO COLOR MOTION: pause when idle, gentle pointer parallax ============ */
+/* ============ HERO COLOR MOTION: pause when idle ============ */
 (function () {
   const hero = $('.hero');
-  const fl = $('.floaters');
   if (!hero) return;
   let seen = true;
   const sync = () => hero.classList.toggle('mo-off', !seen || document.hidden);
@@ -395,20 +394,6 @@ monitor.el.addEventListener('click', (e) => {
     new IntersectionObserver((es) => { seen = es[0].isIntersecting; sync(); }, { threshold: 0 }).observe(hero);
   }
   document.addEventListener('visibilitychange', sync);
-  if (!fl || !FINE.matches || !motionOK()) return;
-  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
-  const step = () => {
-    cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
-    fl.style.setProperty('--px', cx.toFixed(3));
-    fl.style.setProperty('--py', cy.toFixed(3));
-    raf = (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 && seen && !document.hidden) ? requestAnimationFrame(step) : 0;
-  };
-  window.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || !seen) return;
-    tx = (e.clientX / innerWidth - 0.5) * 2;
-    ty = (e.clientY / innerHeight - 0.5) * 2;
-    if (!raf) raf = requestAnimationFrame(step);
-  }, { passive: true });
 })();
 
 /* ============ CASE STUDY (dialog) ============ */
