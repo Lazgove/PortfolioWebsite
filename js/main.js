@@ -345,8 +345,16 @@ function monitorNext() {
   next.currentTime = 0;
   const onPlaying = () => {
     next.removeEventListener('playing', onPlaying);
-    next.classList.add('on');
-    prev.classList.remove('on');
+    // fade the new video in over the old one, then drop the old one with no fade, so only one layer is ever visible at the corners
+    next.classList.add('on', 'top');
+    prev.classList.remove('top');
+    $('.monitor-screen', monitor.el).classList.add('has-video');
+    setTimeout(() => {
+      prev.style.transition = 'none';
+      prev.classList.remove('on');
+      void prev.offsetWidth;
+      prev.style.transition = '';
+    }, 450);
     monitorShow(p);
     monitor.timer = setTimeout(monitorNext, 3600);
   };

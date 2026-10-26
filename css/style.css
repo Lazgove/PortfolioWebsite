@@ -595,10 +595,15 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 .tools dt{ font-weight:600; color:var(--ink); }
 .tools dd{ color:var(--ink-dim); }
 
-.monitor-screen{ position:relative; display:block; aspect-ratio:16 / 10; overflow:hidden; background:var(--surface); border-radius:var(--r-media); }
+.monitor-screen{ position:relative; display:block; aspect-ratio:16 / 10; overflow:hidden; background:transparent; border-radius:var(--r-media);  isolation:isolate; transform:translateZ(0); }
+/* Safari and some mobile browsers let a playing video ignore the parent's rounded clip and show square corners, so the layers get the radius themselves */
+.m-poster, .m-vid, .project-tile .media > img, .project-tile .media > video, .cs-still video, .cs-still img{ border-radius:inherit; }
 .m-poster, .m-vid{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.m-vid{ opacity:0; transition:opacity 400ms linear; }
+.m-vid{ opacity:0; z-index:1; transition:opacity 400ms linear; }
 .m-vid.on{ opacity:1; }
+.m-vid.top{ z-index:2; }
+/* once a video is playing the poster is hidden, so no light layer sits under the video at the rounded corners */
+.monitor-screen.has-video .m-poster{ visibility:hidden; }
 .monitor-bar{ display:flex; align-items:baseline; justify-content:space-between; gap:var(--s-4); padding-top:var(--s-2); font-size:var(--step--1); color:var(--ink-dim); }
 .monitor-tc{ color:var(--ink); font-weight:500; }
 
