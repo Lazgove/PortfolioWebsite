@@ -19,6 +19,7 @@ const PROJECTS = [
   {
     title: "Expert impôts: Social media videos",
     slug: "expert-impots",
+    stillsLayout: "tall",
     tags: ["Social", "3D"],
     tools: "After Effects / Cinema 4D",
     year: "2026",
@@ -53,6 +54,7 @@ const PROJECTS = [
   {
     title: "Holovisio: Characters creation and animations",
     slug: "holovisio-characters",
+    stillsLayout: "tall",
     tags: ["2D", "3D"],
     tools: "After Effects / Cinema 4D",
     year: "2025",

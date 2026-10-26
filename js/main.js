@@ -190,6 +190,83 @@ const revealIO = 'IntersectionObserver' in window
   : null;
 tileEls.forEach(tile => { if (revealIO) revealIO.observe(tile); else tile.classList.add('in'); });
 
+/* ============ VIDEO DISCIPLINE: lazy src, play when visible, at most 3 at once ============ */
+const MAX_PLAYING = 3;
+const tileVideos = $$('.tile-video[data-src]');
+const visibleVids = new Set();
+const vidCenterDistance = (v) => { const r = v.getBoundingClientRect(); return Math.abs((r.top + r.bottom) / 2 - innerHeight / 2); };
+const canPlayTiles = () => autoplayOK() && !document.hidden && !csIsOpen();
+
+function syncPlayback() {
+  const list = [...visibleVids].sort((a, b) => vidCenterDistance(a) - vidCenterDistance(b));
+  let n = 0;
+  list.forEach(v => {
+    if (v.dataset.scrub) return;
+    if (canPlayTiles() && n < MAX_PLAYING) { n++; v.play().catch(() => {}); }
+    else v.pause();
+  });
+  tileVideos.forEach(v => { if (!visibleVids.has(v)) v.pause(); });
+}
+function loadTileVideo(v) {
+  if (v.getAttribute('src')) return;
+  v.src = v.dataset.src;
+  if (v.dataset.start) v.addEventListener('loadedmetadata', () => { v.currentTime = parseFloat(v.dataset.start); }, { once: true });
+}
+tileVideos.forEach(v => {
+  v.addEventListener('playing', () => v.classList.add('is-playing'));
+});
+if (autoplayOK()) {
+  const tileObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const v = entry.target;
+          if (entry.isIntersecting) { loadTileVideo(v); visibleVids.add(v); }
+          else visibleVids.delete(v);
+        });
+        syncPlayback();
+      }, { threshold: 0.25, rootMargin: '100px' })
+    : null;
+  tileVideos.forEach(v => {
+    if (tileObserver) tileObserver.observe(v);
+    else { loadTileVideo(v); visibleVids.add(v); }
+  });
+  window.addEventListener('scroll', (() => { let t_ = 0; return () => { if (t_) return; t_ = setTimeout(() => { t_ = 0; syncPlayback(); }, 150); }; })(), { passive: true });
+  document.addEventListener('visibilitychange', syncPlayback);
+}
+/* reduced motion and save-data: posters only, the tile still opens the case study */
+
+/* ============ TILE SCRUB (pointer only): x position drives currentTime ============ */
+function wireTile(tile) {
+  const v = $('video', tile);
+  const bar = $('.scrub', tile);
+  if (!v) return;
+  let raf = 0, tx = 0, active = false;
+  tile.addEventListener('pointerenter', (e) => {
+    if (e.pointerType !== 'mouse' || !motionOK() || !v.getAttribute('src')) return;
+    active = true;
+    v.dataset.scrub = '1';
+    v.pause();
+  });
+  tile.addEventListener('pointermove', (e) => {
+    if (!active || !v.duration) return;
+    const r = tile.getBoundingClientRect();
+    tx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    if (!raf) raf = requestAnimationFrame(() => {
+      raf = 0;
+      v.currentTime = tx * v.duration;
+      bar.style.transform = `scaleX(${tx})`;
+    });
+  });
+  tile.addEventListener('pointerleave', () => {
+    if (!active) return;
+    active = false;
+    delete v.dataset.scrub;
+    bar.style.transform = 'scaleX(0)';
+    syncPlayback();
+  });
+}
+tileEls.forEach(wireTile);
+
 /* ============ HERO: headline split, playhead sweep, monitor ============ */
 const rootEl = document.documentElement;
 function splitChars(el) {
@@ -306,6 +383,244 @@ monitor.el.addEventListener('click', (e) => {
   if (idx > -1) openCase(idx, monitor.el);
 });
 
+/* ============ CASE STUDY (dialog) ============ */
+const caseStudy = $('#caseStudy');
+const csClose = $('#csClose');
+const csScroll = $('#csScroll');
+const csStage = $('#csStage');
+const pageEl = $('#page');
+let csIdx = -1, csOpener = null, csPushed = false, csPendingScroll = '';
+const csIsOpen = () => caseStudy.classList.contains('open');
+
+const ICON = {
+  pause: '<svg class="i-main" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg><svg class="i-alt" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>',
+  sound: '<svg class="i-main" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 010 8"/><path d="M3 3l18 18"/></svg><svg class="i-alt" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 010 8"/></svg>'
+};
+
+function renderCaseStage(p) {
+  const isVideo = p.hero && p.hero.endsWith('.mp4');
+  const poster = p.preview ? ` poster="media/${p.preview}.jpg"` : '';
+  if (!isVideo) {
+    csStage.innerHTML = `<div class="cs-hero">${p.preview ? `<img src="media/${p.preview}.jpg" alt="${esc(p.title)}">` : ''}</div>`;
+    return;
+  }
+  const auto = autoplayOK();
+  csStage.innerHTML = `
+    <div class="cs-hero"><video id="csHeroVideo" src="media/${esc(p.hero)}"${poster} ${auto ? 'autoplay ' : ''}loop muted playsinline preload="metadata" aria-label="${esc(p.title)}"></video></div>
+    <div class="cs-controls">
+      <button type="button" class="cs-ctl" id="csPlay" aria-pressed="${auto ? 'false' : 'true'}">${ICON.pause}</button>
+      <button type="button" class="cs-ctl" id="csSound" aria-pressed="false">${ICON.sound}</button>
+    </div>`;
+  const v = $('#csHeroVideo');
+  const pl = $('#csPlay'), snd = $('#csSound');
+  pl.addEventListener('click', () => { if (v.paused) v.play().catch(() => {}); else v.pause(); });
+  v.addEventListener('play', () => { pl.setAttribute('aria-pressed', 'false'); updateCsLabels(); });
+  v.addEventListener('pause', () => { pl.setAttribute('aria-pressed', 'true'); updateCsLabels(); });
+  snd.addEventListener('click', () => { v.muted = !v.muted; snd.setAttribute('aria-pressed', v.muted ? 'false' : 'true'); updateCsLabels(); });
+  updateCsLabels();
+}
+function updateCsLabels() {
+  const v = $('#csHeroVideo');
+  if (!v) return;
+  $('#csPlay').setAttribute('aria-label', v.paused ? t('cs.play') : t('cs.pause'));
+  $('#csSound').setAttribute('aria-label', v.muted ? t('cs.mute') : t('cs.unmute'));
+}
+
+function renderCaseStills(p) {
+  const items = p.stills.map((s, n) => {
+    const isVid = s.endsWith('.mp4');
+    const body = isVid
+      ? `<video src="media/${esc(s)}" controls muted playsinline preload="metadata" aria-label="${esc(p.title)}, ${n + 1}"></video>`
+      : `<img src="media/${esc(s)}" alt="${esc(p.title)}, ${n + 1}" loading="lazy" decoding="async">`;
+    return `<figure class="cs-still">${body}</figure>`;
+  });
+  if (p.stillsLayout === 'tall') return `<div class="cs-row tall">${items.join('')}</div>`;
+  // alternate: one full width, then a pair, then full width again
+  let html = '', i = 0, full = true;
+  while (i < items.length) {
+    if (full || i === items.length - 1) { html += items[i]; i += 1; }
+    else { html += `<div class="cs-row two">${items[i]}${items[i + 1]}</div>`; i += 2; }
+    full = !full;
+  }
+  return html;
+}
+
+function renderCaseText(idx) {
+  const p = PROJECTS[idx];
+  const { client, sub } = splitTitle(p.title);
+  $('.cs-client', caseStudy).textContent = client;
+  $('.cs-sub', caseStudy).textContent = sub;
+  $('#csDesc').textContent = loc(p, 'desc');
+  $('#csCredits').innerHTML = `
+    <div><dt>${t('cs.client')}</dt><dd>${esc(p.client)}</dd></div>
+    <div><dt>${t('cs.role')}</dt><dd>${esc(loc(p, 'role'))}</dd></div>
+    <div><dt>${t('cs.tools')}</dt><dd>${esc(p.tools)}</dd></div>
+    <div><dt>${t('cs.year')}</dt><dd class="num">${esc(p.year)}</dd></div>`;
+  const nextIdx = (idx + 1) % PROJECTS.length;
+  const np = PROJECTS[nextIdx];
+  const nextLink = $('#csNext');
+  nextLink.href = `#project=${np.slug}`;
+  nextLink.dataset.next = nextIdx;
+  $('#csNextTitle').textContent = np.title.replace(': ', ', ');
+  const th = $('#csNextThumb');
+  if (np.preview) th.src = `media/${np.preview}.jpg`;
+  updateCsLabels();
+}
+function renderCase(idx) {
+  const p = PROJECTS[idx];
+  renderCaseStage(p);
+  $('#csMedia').innerHTML = renderCaseStills(p);
+  renderCaseText(idx);
+  csIdx = idx;
+  csScroll.scrollTop = 0;
+}
+
+function csUnloadVideos() {
+  $$('video', caseStudy).forEach(v => { v.pause(); v.removeAttribute('src'); v.load(); });
+}
+function pageOverlayOn() {
+  caseStudy.removeAttribute('inert');
+  caseStudy.classList.add('open');
+  pageEl.setAttribute('inert', '');
+  rootEl.classList.add('cs-lock');
+}
+function pageOverlayOff() {
+  caseStudy.classList.remove('open');
+  caseStudy.setAttribute('inert', '');
+  pageEl.removeAttribute('inert');
+  rootEl.classList.remove('cs-lock');
+}
+
+function openCase(idx, opener, opts = {}) {
+  const p = PROJECTS[idx];
+  if (!p) return;
+  const wasOpen = csIsOpen();
+  if (!wasOpen) csOpener = opener || document.activeElement;
+  if (opts.fromHash) { /* url already points here */ }
+  else if (wasOpen) history.replaceState({ cs: p.slug }, '', `#project=${p.slug}`);
+  else { history.pushState({ cs: p.slug }, '', `#project=${p.slug}`); csPushed = true; }
+
+  const tile = opener && opener.classList && opener.classList.contains('project-tile') ? opener : null;
+  const run = () => {
+    if (tile) tile.classList.remove('is-source');
+    renderCase(idx);
+    if (!wasOpen) { pageOverlayOn(); monitor.stop && monitor.stop(); syncPlayback(); }
+    if (!opts.fromHash || !wasOpen) csClose.focus({ preventScroll: true });
+  };
+
+  if (!motionOK() || opts.instant) { run(); return; }
+  if (document.startViewTransition) {
+    if (wasOpen) {
+      rootEl.classList.add('vt-next');
+      const vt = document.startViewTransition(run);
+      vt.finished.finally(() => rootEl.classList.remove('vt-next'));
+    } else {
+      if (tile) { tile.classList.add('is-source'); rootEl.classList.add('vt-tile-active'); }
+      const vt = document.startViewTransition(run);
+      vt.finished.finally(() => { if (tile) tile.classList.remove('is-source'); rootEl.classList.remove('vt-tile-active'); });
+    }
+  } else if (!wasOpen && opener && opener.getBoundingClientRect) {
+    const r = opener.getBoundingClientRect();
+    const from = `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px round 4px)`;
+    run();
+    caseStudy.animate([{ clipPath: from }, { clipPath: 'inset(0 0 0 0 round 0)' }], { duration: 700, easing: 'cubic-bezier(.65,0,.35,1)' });
+  } else {
+    run();
+  }
+}
+
+function focusAfterClose() {
+  const tile = tileEls[csIdx];
+  let target = null;
+  if (csOpener && document.contains(csOpener) && csOpener.offsetParent !== null && !(csOpener.classList && csOpener.classList.contains('hidden'))) target = csOpener;
+  if (tile && !tile.classList.contains('hidden') && csOpener && csOpener.classList && csOpener.classList.contains('project-tile')) target = tile;
+  if (!target) target = $('#workTitle');
+  if (target === $('#workTitle')) target.setAttribute('tabindex', '-1');
+  target.focus({ preventScroll: true });
+}
+function doClose() {
+  if (!csIsOpen()) return;
+  const tile = tileEls[csIdx];
+  const canMorph = tile && !tile.classList.contains('hidden') && csScroll.scrollTop < 4 &&
+    (() => { const r = tile.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; })();
+  const finish = () => {
+    pageOverlayOff();
+    csUnloadVideos();
+    csStage.innerHTML = '';
+    focusAfterClose();
+    syncPlayback();
+    if (monitor.started) monitorNext();
+    if (csPendingScroll) { const el = document.getElementById(csPendingScroll); csPendingScroll = ''; if (el) el.scrollIntoView(); }
+  };
+  if (!motionOK()) { finish(); return; }
+  if (document.startViewTransition) {
+    if (canMorph) { tile.classList.add('is-source'); rootEl.classList.add('vt-tile-active'); }
+    const vt = document.startViewTransition(finish);
+    vt.finished.finally(() => { rootEl.classList.remove('vt-tile-active'); if (tile) tile.classList.remove('is-source'); });
+  } else {
+    const a = caseStudy.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, easing: 'ease-out' });
+    a.finished.then(finish, finish);
+  }
+}
+function closeCase() {
+  if (!csIsOpen()) return;
+  if (csPushed) { csPushed = false; history.back(); }        // popstate runs doClose
+  else { history.replaceState(null, '', location.pathname + location.search); doClose(); }
+}
+
+csClose.addEventListener('click', closeCase);
+$('#csBack').addEventListener('click', closeCase);
+$('#csContact').addEventListener('click', (e) => { e.preventDefault(); csPendingScroll = 'contact'; closeCase(); });
+$('#csNext').addEventListener('click', (e) => {
+  e.preventDefault();
+  openCase(parseInt($('#csNext').dataset.next, 10), null);
+});
+document.addEventListener('keydown', (e) => {
+  if (!csIsOpen()) return;
+  if (e.key === 'Escape') { e.preventDefault(); closeCase(); return; }
+  if (e.key === 'Tab') {
+    const f = $$('button, a[href], video[controls], [tabindex]:not([tabindex="-1"])', caseStudy).filter(el => el.offsetParent !== null || el === csClose);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !caseStudy.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
+/* thumbnail that follows the pointer over "Next project" (mouse only) */
+(() => {
+  const nx = $('#csNext');
+  nx.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = nx.getBoundingClientRect();
+    nx.style.setProperty('--tx', `${e.clientX - r.left + 24}px`);
+    nx.style.setProperty('--ty', `${e.clientY - r.top - 60}px`);
+    nx.classList.add('hovering');
+  });
+  nx.addEventListener('pointerleave', () => nx.classList.remove('hovering'));
+})();
+
+/* tiles are real links: plain click opens the dialog, modified clicks keep default behaviour */
+gridEl.addEventListener('click', (e) => {
+  const tile = e.target.closest('.project-tile');
+  if (!tile || e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+  e.preventDefault();
+  openCase(+tile.dataset.index, tile);
+});
+
+/* url sync: #project=slug opens, anything else closes (back button, shared links) */
+function slugFromHash() { const m = location.hash.match(/^#project=([\w-]+)$/); return m ? m[1] : null; }
+function syncFromHash() {
+  const slug = slugFromHash();
+  const idx = slug ? PROJECTS.findIndex(p => p.slug === slug) : -1;
+  if (idx > -1) {
+    if (!csIsOpen()) openCase(idx, null, { fromHash: true, instant: true });
+    else if (idx !== csIdx) openCase(idx, null, { fromHash: true });
+  } else if (csIsOpen()) doClose();
+}
+window.addEventListener('popstate', syncFromHash);
+window.addEventListener('hashchange', syncFromHash);
+
 /* ============ INIT ============ */
 renderTileText();
 renderFilters();
@@ -313,4 +628,5 @@ renderWorkMeta();
 layoutTiles();
 initMonitor();
 armHero();
-onLangChange(() => { renderTileText(); renderFilters(); renderWorkMeta(); });
+onLangChange(() => { renderTileText(); renderFilters(); renderWorkMeta(); if (csIsOpen()) renderCaseText(csIdx); });
+syncFromHash();
