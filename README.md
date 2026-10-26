@@ -21,7 +21,7 @@ media/            → put real video/image files here (currently empty)
 ## How the site is organized
 
 - **Design tokens**, CSS custom properties at the top of `css/style.css` (`--bg`, `--ink`, `--accent`, etc.) control the whole color system. Change them there, not per-element.
-- **Fonts**, Noto Sans (headlines), Open Sans (body text), Noto Sans Mono (utility/credits text), loaded via Google Fonts `<link>` in `index.html`.
+- **Fonts**, Bricolage Grotesque (display), Instrument Sans (body text), Geist Mono (credits and numerals). Self-hosted WOFF2 files in `fonts/` (SIL OFL), about 99 KB in total, preloaded and cached for a year via `netlify.toml`.
 - **PROJECTS array**, in `js/data.js`. Single source of truth for the work grid and case study pages. Each entry:
   ```js
   {
