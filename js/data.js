@@ -2,6 +2,7 @@ const PROJECTS = [
   {
     title: "AC Consulting",
     slug: "ac-consulting",
+    color: "#6D74D6",
     tags: ["Social"],
     tools: "After Effects / Cinema 4D",
     year: "2023",
@@ -19,6 +20,7 @@ const PROJECTS = [
   {
     title: "Expert impôts: Social media videos",
     slug: "expert-impots",
+    color: "#E8A674",
     stillsLayout: "tall",
     tags: ["Social", "3D"],
     tools: "After Effects / Cinema 4D",
@@ -37,6 +39,7 @@ const PROJECTS = [
   {
     title: "Fortel",
     slug: "fortel",
+    color: "#D1D415",
     tags: ["2D"],
     tools: "After Effects / Cinema 4D",
     year: "2025",
@@ -54,6 +57,7 @@ const PROJECTS = [
   {
     title: "Holovisio: Characters creation and animations",
     slug: "holovisio-characters",
+    color: "#6D74D6",
     stillsLayout: "tall",
     tags: ["2D", "3D"],
     tools: "After Effects / Cinema 4D",
@@ -74,6 +78,7 @@ const PROJECTS = [
   {
     title: "Holovisio: STEP files animations",
     slug: "holovisio-step-files",
+    color: "#C4C911",
     tags: ["3D"],
     tools: "After Effects / Cinema 4D",
     year: "2026",
@@ -91,6 +96,7 @@ const PROJECTS = [
   {
     title: "Kanopée associés: Explainer videos and edits",
     slug: "kanopee-explainers",
+    color: "#EB75C4",
     tags: ["Explainer", "Edit"],
     tools: "After Effects / Cinema 4D",
     year: "2026",
@@ -108,6 +114,7 @@ const PROJECTS = [
   {
     title: "Laodis",
     slug: "laodis",
+    color: "#594C99",
     tags: ["3D"],
     tools: "After Effects / Cinema 4D",
     year: "2022",
@@ -125,6 +132,7 @@ const PROJECTS = [
   {
     title: "Recognity, SAMDOC: 3D animation",
     slug: "samdoc",
+    color: "#1E9599",
     tags: ["3D", "Explainer"],
     tools: "After Effects / Cinema 4D",
     year: "2023",
