@@ -50,6 +50,7 @@ PROJECTS.forEach((p, i) => {
   tile.href = `#project=${p.slug}`;
   tile.dataset.index = i;
   tile.dataset.cursor = 'view';
+  if (isVertical(p)) tile.dataset.vertical = '';
   tile.setAttribute('aria-label', p.title);
 
   const isVideo = p.hero && p.hero.endsWith('.mp4');
@@ -189,9 +190,127 @@ const revealIO = 'IntersectionObserver' in window
   : null;
 tileEls.forEach(tile => { if (revealIO) revealIO.observe(tile); else tile.classList.add('in'); });
 
+/* ============ HERO: headline split, playhead sweep, monitor ============ */
+const rootEl = document.documentElement;
+function splitChars(el) {
+  const text = el.textContent;
+  el.textContent = '';
+  const full = document.createElement('span');
+  full.className = 'sr-only';
+  full.textContent = text;
+  const vis = document.createElement('span');
+  vis.setAttribute('aria-hidden', 'true');
+  [...text].forEach(ch => {
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = ch;
+    vis.appendChild(s);
+  });
+  el.append(full, vis);
+}
+let heroSeen = false;
+try { heroSeen = sessionStorage.getItem('heroPlayed') === '1'; } catch (e) { /* ignore */ }
+const heroAnimates = motionOK() && !heroSeen;
+
+function armHero() {
+  if (!heroAnimates) { rootEl.classList.add('no-anim', 'is-ready'); return; }
+  rootEl.classList.add('hero-anim');
+  $$('.hero-title .line > span:not(.sr-only)').forEach(splitChars);
+  const W = innerWidth;
+  $$('.hero-title .char').forEach(c => {
+    const x = c.getBoundingClientRect().left;
+    c.style.setProperty('--delay', Math.round((x / W) * 1100) + 'ms');
+  });
+  const firstPoster = new Promise(res => {
+    const im = $('.m-poster');
+    if (!im.src || im.complete) res(); else { im.addEventListener('load', res, { once: true }); im.addEventListener('error', res, { once: true }); }
+  });
+  Promise.race([
+    Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), firstPoster]),
+    new Promise(r => setTimeout(r, 900))
+  ]).then(() => {
+    rootEl.classList.add('is-ready');
+    try { sessionStorage.setItem('heroPlayed', '1'); } catch (e) { /* ignore */ }
+  });
+}
+
+const MONITOR_SLUGS = ['fortel', 'laodis', 'holovisio-step-files', 'samdoc'];
+const monitor = {
+  el: $('#monitor'),
+  vids: $$('#monitor .m-vid'),
+  poster: $('#monitor .m-poster'),
+  tc: $('#monitorTc'),
+  name: $('#monitorName'),
+  list: MONITOR_SLUGS.map(s => PROJECTS.find(p => p.slug === s)).filter(p => p && p.preview),
+  i: -1, cur: 0, timer: 0, visible: true, started: false
+};
+function monitorLabel(p) { return splitTitle(p.title).client; }
+function monitorShow(p) {
+  monitor.name.textContent = monitorLabel(p);
+  monitor.el.setAttribute('href', `#project=${p.slug}`);
+  monitor.el.dataset.slug = p.slug;
+}
+function monitorNext() {
+  clearTimeout(monitor.timer);
+  if (!monitor.started || document.hidden || !monitor.visible || csIsOpen()) return;
+  monitor.i = (monitor.i + 1) % monitor.list.length;
+  const p = monitor.list[monitor.i];
+  const next = monitor.vids[monitor.cur ^ 1];
+  const prev = monitor.vids[monitor.cur];
+  monitor.cur ^= 1;
+  next.src = `media/${p.preview}.mp4`;
+  next.currentTime = 0;
+  const onPlaying = () => {
+    next.removeEventListener('playing', onPlaying);
+    next.classList.add('on');
+    prev.classList.remove('on');
+    monitorShow(p);
+    monitor.timer = setTimeout(monitorNext, 3600);
+  };
+  next.addEventListener('playing', onPlaying);
+  next.play().catch(() => { monitor.timer = setTimeout(monitorNext, 3600); });
+}
+function fmtTc(s) {
+  const m = Math.floor(s / 60);
+  const r = s - m * 60;
+  return `${m}:${r.toFixed(1).padStart(4, '0')}`;
+}
+function monitorTick() {
+  const v = monitor.vids[monitor.cur];
+  if (monitor.visible && v && !v.paused) monitor.tc.textContent = fmtTc(v.currentTime);
+  requestAnimationFrame(monitorTick);
+}
+function initMonitor() {
+  if (!monitor.list.length) { monitor.el.hidden = true; return; }
+  const first = monitor.list[0];
+  monitor.poster.src = `media/${first.preview}.jpg`;
+  monitorShow(first);
+  if (!autoplayOK()) return;            // reduced motion or save-data: one static poster
+  monitor.started = true;
+  requestAnimationFrame(monitorTick);
+  const stop = () => { monitor.vids.forEach(v => v.pause()); clearTimeout(monitor.timer); };
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((es) => {
+      monitor.visible = es[0].isIntersecting;
+      if (monitor.visible) monitorNext(); else stop();
+    }, { threshold: 0.2 }).observe(monitor.el);
+  } else monitorNext();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop(); else monitorNext();
+  });
+  monitor.stop = stop;
+}
+monitor.el.addEventListener('click', (e) => {
+  e.preventDefault();
+  const idx = PROJECTS.findIndex(p => p.slug === monitor.el.dataset.slug);
+  if (idx > -1) openCase(idx, monitor.el);
+});
+
 /* ============ INIT ============ */
 renderTileText();
 renderFilters();
 renderWorkMeta();
 layoutTiles();
+initMonitor();
+armHero();
 onLangChange(() => { renderTileText(); renderFilters(); renderWorkMeta(); });
