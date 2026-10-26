@@ -70,7 +70,6 @@
   --c-b: var(--support-1);
   --c-c: var(--support-2);
   --c-d: var(--accent);
-  --aurora-o: .22;
 
   /* type */
   --font-display: "Bricolage Grotesque", "Bricolage Fallback", "Helvetica Neue", Arial, sans-serif;
@@ -143,7 +142,6 @@
   --focus:       #B4B9F8;
   --signal:      #8CC7A4;
   --header-bg:   rgba(16,17,26,.78);
-  --aurora-o: .18;
 }
 
 /* ============ BASE ============ */
@@ -297,25 +295,7 @@ footer .legal{ grid-column:1 / -1; }
 @media (hover:none), (pointer:coarse){ .cursor{ display:none !important; } }
 
 /* ============ COLOR MOTION ============ */
-/* hero aurora: three soft radial blobs, transform only, no blur filter */
-.aurora{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.aurora::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:35%; background:linear-gradient(to bottom, transparent, var(--bg)); }
-.aurora i{
-  position:absolute; width:62vmax; height:62vmax; border-radius:50%;
-  opacity:var(--aurora-o); will-change:transform;
-  background:radial-gradient(closest-side, var(--blob) 0%, transparent 100%);
-}
-.aurora .b1{ --blob:var(--c-a); left:48%; top:-30%; animation:aur-1 46s ease-in-out infinite alternate; }
-.aurora .b2{ --blob:var(--c-b); left:-22%; top:22%; width:50vmax; height:50vmax; animation:aur-2 58s ease-in-out infinite alternate; }
-.aurora .b3{ --blob:var(--c-c); left:62%; top:30%; width:44vmax; height:44vmax; animation:aur-3 52s ease-in-out infinite alternate; }
-@keyframes aur-1{ to{ transform:translate3d(-14vmax, 10vmax, 0) scale(1.15); } }
-@keyframes aur-2{ to{ transform:translate3d(16vmax, -6vmax, 0) scale(.9); } }
-@keyframes aur-3{ to{ transform:translate3d(-18vmax, -8vmax, 0) scale(1.2); } }
 .hero-grid, .hero-ruler{ position:relative; z-index:1; }
-
-/* pause everything when the hero is offscreen, the tab is hidden or the case study is open */
-.hero.mo-off .aurora i,
-.cs-lock .aurora i{ animation-play-state:paused; }
 
 /* per-project color: tile glow, caption bar, case study accent line */
 .project-tile, .case-study{ --pc-line:color-mix(in srgb, var(--pc, var(--accent)) 60%, var(--ink)); }
@@ -361,13 +341,6 @@ footer .legal{ grid-column:1 / -1; }
   @keyframes rule-shift{ to{ background-position:100% 0; } }
 }
 
-@media (max-width:899px){
-  .aurora{ opacity:.55; }
-  .aurora .b3{ display:none; }
-  .aurora i{ width:90vmax; height:90vmax; }
-  .aurora .b1{ left:20%; top:-20%; }
-  .aurora .b2{ left:-40%; top:30%; width:80vmax; height:80vmax; }
-}
 @media (max-width:899px) and (prefers-reduced-motion:no-preference){ .hue-rule{ opacity:.45; } }
 
 /* ============ REDUCED MOTION ============ */
@@ -379,7 +352,6 @@ footer .legal{ grid-column:1 / -1; }
   }
   .char, .reveal, .project-tile .media{ opacity:1 !important; transform:none !important; clip-path:none !important; }
   .cursor, .playhead, .scroll-line{ display:none !important; }
-  .aurora i{ will-change:auto; }
 }
 
 /* ============ PLAYGROUND ============ */

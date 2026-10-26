@@ -384,18 +384,6 @@ monitor.el.addEventListener('click', (e) => {
   if (idx > -1) openCase(idx, monitor.el);
 });
 
-/* ============ HERO COLOR MOTION: pause when idle ============ */
-(function () {
-  const hero = $('.hero');
-  if (!hero) return;
-  let seen = true;
-  const sync = () => hero.classList.toggle('mo-off', !seen || document.hidden);
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((es) => { seen = es[0].isIntersecting; sync(); }, { threshold: 0 }).observe(hero);
-  }
-  document.addEventListener('visibilitychange', sync);
-})();
-
 /* ============ CASE STUDY (dialog) ============ */
 const caseStudy = $('#caseStudy');
 const csClose = $('#csClose');
