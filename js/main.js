@@ -150,6 +150,11 @@ function moveFilterLine() {
   const btn = $(`.filter-tag[data-tag="${activeTag}"]`, filtersEl);
   if (!btn) return;
   filterLine.style.transform = `translate(${btn.offsetLeft}px, ${btn.offsetTop + btn.offsetHeight - 2}px) scaleX(${btn.offsetWidth})`;
+  // when the filters scroll sideways (phones), keep the active one in view
+  if (filtersEl.scrollWidth > filtersEl.clientWidth + 1) {
+    const target = Math.max(0, btn.offsetLeft - 24);
+    filtersEl.scrollTo({ left: target, behavior: motionOK() ? 'smooth' : 'auto' });
+  }
 }
 window.addEventListener('resize', moveFilterLine);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveFilterLine);
@@ -280,7 +285,7 @@ function splitChars(el) {
   vis.setAttribute('aria-hidden', 'true');
   [...text].forEach(ch => {
     const s = document.createElement('span');
-    s.className = 'char';
+    s.className = ch === '+' ? 'char plus' : 'char';
     s.textContent = ch;
     vis.appendChild(s);
   });
@@ -383,33 +388,6 @@ monitor.el.addEventListener('click', (e) => {
   const idx = PROJECTS.findIndex(p => p.slug === monitor.el.dataset.slug);
   if (idx > -1) openCase(idx, monitor.el);
 });
-
-/* ============ HERO COLOR MOTION: pause when idle, gentle pointer parallax ============ */
-(function () {
-  const hero = $('.hero');
-  const fl = $('.floaters');
-  if (!hero) return;
-  let seen = true;
-  const sync = () => hero.classList.toggle('mo-off', !seen || document.hidden);
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((es) => { seen = es[0].isIntersecting; sync(); }, { threshold: 0 }).observe(hero);
-  }
-  document.addEventListener('visibilitychange', sync);
-  if (!fl || !FINE.matches || !motionOK()) return;
-  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
-  const step = () => {
-    cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
-    fl.style.setProperty('--px', cx.toFixed(3));
-    fl.style.setProperty('--py', cy.toFixed(3));
-    raf = (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 && seen && !document.hidden) ? requestAnimationFrame(step) : 0;
-  };
-  window.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || !seen) return;
-    tx = (e.clientX / innerWidth - 0.5) * 2;
-    ty = (e.clientY / innerHeight - 0.5) * 2;
-    if (!raf) raf = requestAnimationFrame(step);
-  }, { passive: true });
-})();
 
 /* ============ CASE STUDY (dialog) ============ */
 const caseStudy = $('#caseStudy');
