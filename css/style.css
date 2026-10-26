@@ -291,25 +291,32 @@ footer .legal{ grid-column:1 / -1; }
 .cs-lock .aurora i{ animation-play-state:paused; }
 
 /* per-project color: tile glow, caption bar, case study accent line */
+.project-tile, .case-study{ --pc-line:color-mix(in srgb, var(--pc, var(--accent)) 60%, var(--ink)); }
 .project-tile{ position:relative; isolation:isolate; }
+/* the glow keeps the raw tint but is masked to end about 16px below the media, so captions sit on plain page color */
 .project-tile::before{
-  content:''; position:absolute; left:4%; right:4%; top:0; z-index:-1;
+  content:''; position:absolute; left:0; right:0; top:0; z-index:-1;
   aspect-ratio:var(--ar, 16 / 10); border-radius:var(--r-media);
   background:var(--pc, var(--accent)); filter:blur(34px);
-  opacity:0; transform:translateY(16px) scale(.94);
+  -webkit-mask-image:linear-gradient(to bottom, #000 calc(66.67% - 36px), transparent calc(66.67% + 4px));
+  mask-image:linear-gradient(to bottom, #000 calc(66.67% - 36px), transparent calc(66.67% + 4px));
+  -webkit-mask-size:300% 300%; mask-size:300% 300%;
+  -webkit-mask-position:50% 50%; mask-position:50% 50%;
+  -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  opacity:0; transform:translateY(16px) scaleX(.88);
   transition:opacity var(--d-slow) var(--ease-snap), transform var(--d-slow) var(--ease-snap);
   pointer-events:none;
 }
-.project-tile:hover::before, .project-tile:focus-visible::before{ opacity:.5; transform:translateY(12px) scale(1); }
+.project-tile:hover::before, .project-tile:focus-visible::before{ opacity:.5; transform:translateY(12px) scaleX(.92); }
 .cap-client{ position:relative; width:fit-content; }
 .cap-client::after{
-  content:''; position:absolute; left:0; right:0; bottom:-3px; height:2px; background:var(--pc, var(--accent));
+  content:''; position:absolute; left:0; right:0; bottom:-3px; height:2px; background:var(--pc-line);
   transform:scaleX(0); transform-origin:left; transition:transform var(--d-slow) var(--ease-out);
 }
 .project-tile:hover .cap-client::after, .project-tile:focus-visible .cap-client::after{ transform:scaleX(1); }
-.scrub{ background:var(--pc, var(--accent)); }
+.scrub{ background:var(--pc-line); }
 .cs-head{ position:relative; }
-.cs-head::before{ content:''; display:block; grid-column:1 / -1; width:72px; height:3px; border-radius:2px; background:var(--pc, var(--accent)); margin-bottom:calc(var(--s-5) * -1); }
+.cs-head::before{ content:''; display:block; grid-column:1 / -1; width:72px; height:3px; border-radius:2px; background:var(--pc-line); margin-bottom:calc(var(--s-5) * -1); }
 .cs-foot{ border-top-color:color-mix(in srgb, var(--pc, var(--line)) 55%, var(--line)); }
 
 /* scroll-linked hue: progress line and section rules. Needs scroll timelines, otherwise hidden or static. */
@@ -479,7 +486,7 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
   padding:7px; box-sizing:content-box; border-radius:var(--r-chip);
   background:var(--bg); color:var(--ink); display:none;
 }
-.scrub{ position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; z-index:2; }
+.scrub{ position:absolute; left:0; right:0; bottom:0; height:2px; transform:scaleX(0); transform-origin:left; z-index:2; }
 .meta-panel{ position:absolute; left:0; right:0; bottom:0; z-index:1; padding:var(--s-4); display:grid; gap:2px; color:var(--stage-ink); background:linear-gradient(to top, rgba(8,9,14,.82), rgba(8,9,14,0)); padding-top:var(--s-7); transform:translateY(100%); font-size:var(--step--1); }
 
 .noscript-note{ padding:0 var(--gutter); }
