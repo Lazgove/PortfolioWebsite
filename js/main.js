@@ -150,6 +150,11 @@ function moveFilterLine() {
   const btn = $(`.filter-tag[data-tag="${activeTag}"]`, filtersEl);
   if (!btn) return;
   filterLine.style.transform = `translate(${btn.offsetLeft}px, ${btn.offsetTop + btn.offsetHeight - 2}px) scaleX(${btn.offsetWidth})`;
+  // when the filters scroll sideways (phones), keep the active one in view
+  if (filtersEl.scrollWidth > filtersEl.clientWidth + 1) {
+    const target = Math.max(0, btn.offsetLeft - 24);
+    filtersEl.scrollTo({ left: target, behavior: motionOK() ? 'smooth' : 'auto' });
+  }
 }
 window.addEventListener('resize', moveFilterLine);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveFilterLine);

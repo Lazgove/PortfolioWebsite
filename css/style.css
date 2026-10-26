@@ -240,6 +240,7 @@ ul{ list-style:none; }
 
 @media (max-width:760px){
   .site-header{ flex-wrap:wrap; row-gap:0; }
+  .site-header.nav-open{ background:var(--bg); -webkit-backdrop-filter:none; backdrop-filter:none; } /* solid panel, nothing shows through the open menu */
   .site-header .logo{ order:1; margin-right:auto; }
   .header-actions{ order:2; }
   .header-actions .cv-link{ display:none; }
@@ -430,6 +431,16 @@ section[id]{ scroll-margin-top:calc(var(--header-h) + var(--s-4)); }
 .filter-tag:hover,
 .filter-tag[aria-pressed="true"]{ color:var(--ink); }
 .filter-tag { align-items:center; }
+/* phones: one row that scrolls sideways, with a soft fade on the right edge as a hint */
+@media (max-width:760px){
+  .filters{
+    flex-wrap:nowrap; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(to right, #000 calc(100% - 32px), transparent);
+    mask-image:linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  }
+  .filters::-webkit-scrollbar{ display:none; }
+  .filter-tag{ flex:0 0 auto; white-space:nowrap; }
+}
 .f-count{ font-size:var(--step--1); color:var(--ink-dim); }
 .filter-line{
   position:absolute; left:0; top:0; width:1px; height:2px; background:var(--accent);
