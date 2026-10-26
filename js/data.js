@@ -10,6 +10,7 @@ const PROJECTS = [
     desc: "Motion design for AC Consulting — storyboard, asset creation, animation, and simulations for a brand collaboration reveal, made with After Effects and Cinema 4D.",
     desc_fr: "Motion design pour AC Consulting — storyboard, création d'assets, animation et simulations pour une révélation de collaboration de marque, réalisée avec After Effects et Cinema 4D.",
     hero: "AC_Consulting/Animation.mp4",
+    preview: "previews/ac-consulting-animation",
     stills: ["AC_Consulting/ac_reveal.gif"]
   },
   {
@@ -22,8 +23,9 @@ const PROJECTS = [
     application: "Social / 9:16",
     desc: "Social media video content for Expert Impôts — storyboard, asset creation, animation, and simulations designed for vertical social placement, made with After Effects and Cinema 4D.",
     desc_fr: "Contenus vidéo pour les réseaux sociaux d'Expert Impôts — storyboard, création d'assets, animation et simulations conçus pour un format social vertical, réalisés avec After Effects et Cinema 4D.",
-    hero: "Expert_impots/expert_impots.mp4",
-    stills: ["Expert_impots/Format_4_5.mp4", "Expert_impots/expert_invest.gif", "Expert_impots/expert_eval.gif", "Expert_impots/expert_save.gif"]
+    hero: "expert_impots/expert_impots.mp4",
+    preview: "previews/expert-impots-expert-impots",
+    stills: ["expert_impots/Format_4_5.mp4", "expert_impots/expert_invest.gif", "expert_impots/expert_eval.gif", "expert_impots/expert_save.gif"]
   },
   {
     title: "Fortel",
@@ -36,6 +38,7 @@ const PROJECTS = [
     desc: "Animated New Year's greeting card for Fortel — storyboard, asset creation, animation, and simulations for a celebratory map-based animation highlighting the company's multiple office locations, made with After Effects and Cinema 4D.",
     desc_fr: "Carte de vœux animée pour Fortel — storyboard, création d'assets, animation et simulations pour une animation festive basée sur une carte, mettant en avant les différents sites de l'entreprise, réalisée avec After Effects et Cinema 4D.",
     hero: "Fortel/Fortel.mp4",
+    preview: "previews/fortel-fortel",
     stills: ["Fortel/fortel_map.gif", "Fortel/fortel_greeting.gif"]
   },
   {
@@ -49,6 +52,7 @@ const PROJECTS = [
     desc: "Character creation and animation — storyboard, asset creation, animation, and simulations for original characters designed for product and brand storytelling, made with After Effects and Cinema 4D.",
     desc_fr: "Création et animation de personnages — storyboard, création d'assets, animation et simulations pour des personnages originaux conçus pour le storytelling produit et marque, réalisés avec After Effects et Cinema 4D.",
     hero: "Holovisio/Characters/To_send_Animation_finale_black.mp4",
+    preview: "previews/holovisio-characters-to-send-animation-finale-black",
     heroStart: 2,
     heroPosition: "top",
     stills: ["Holovisio/Characters/Render_JPS_1.mp4", "Holovisio/Characters/Simone.mp4", "Holovisio/Characters/holo_gesture.gif", "Holovisio/Characters/holo_talk.gif"]
@@ -64,6 +68,7 @@ const PROJECTS = [
     desc: "Technical STEP file animations — bringing CAD models to life with dynamic 3D animation for product visualization.",
     desc_fr: "Animations de fichiers STEP techniques — mise en mouvement de modèles CAO avec des animations 3D dynamiques pour la visualisation produit.",
     hero: "Holovisio/CAD/Animation_orano_v4.mp4",
+    preview: "previews/holovisio-cad-animation-orano-v4",
     stills: ["Holovisio/CAD/cad_drive.gif", "Holovisio/CAD/cad_radar.gif"]
   },
   {
@@ -77,6 +82,7 @@ const PROJECTS = [
     desc: "Explainer videos and editorial edits — storyboard, asset creation, animation, and simulations combined with editorial edits, made with After Effects and Cinema 4D.",
     desc_fr: "Vidéos explicatives et montages éditoriaux — storyboard, création d'assets, animation et simulations combinés à des montages éditoriaux, réalisés avec After Effects et Cinema 4D.",
     hero: "Kanopée associés/Motion_Collectif_1310_Main.mp4",
+    preview: "previews/kanopee-associes-motion-collectif-1310-main",
     stills: ["Kanopée associés/Link20Avril.mp4", "Kanopée associés/kanopee_stat.gif", "Kanopée associés/kanopee_wipe.gif"]
   },
   {
@@ -90,6 +96,7 @@ const PROJECTS = [
     desc: "3D product animation for Laodis — storyboard, asset creation, animation, and simulations, made with After Effects and Cinema 4D.",
     desc_fr: "Animation 3D produit pour Laodis — storyboard, création d'assets, animation et simulations, réalisée avec After Effects et Cinema 4D.",
     hero: "Laodis/laodis_2.mp4",
+    preview: "previews/laodis-laodis-2",
     stills: ["Laodis/laodis_1.mp4", "Laodis/laodis_multi.gif"]
   },
   {
@@ -103,6 +110,7 @@ const PROJECTS = [
     desc: "3D animation for SAMDOC, made in collaboration with two other artists who handled the screenplay and storyboard — I built the assets, animation, and simulations from their shot ideas, using After Effects and Cinema 4D.",
     desc_fr: "Animation 3D pour SAMDOC, réalisée en collaboration avec deux autres artistes en charge du scénario et du storyboard — j'ai créé les assets, l'animation et les simulations à partir de leurs idées de plans, avec After Effects et Cinema 4D.",
     hero: "Samdoc/samdoc.mp4",
+    preview: "previews/samdoc-samdoc",
     stills: ["Samdoc/samdoc_pod.gif", "Samdoc/samdoc_bins.gif", "Samdoc/samdoc_logo.gif"]
   }
 ];
